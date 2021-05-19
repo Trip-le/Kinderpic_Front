@@ -45,7 +45,7 @@
         android:background="?android:attr/windowBackground"
         app:itemIconTint="@color/selector_bottom_nav_color"
         app:itemTextColor="@color/selector_bottom_nav_color"
-        app:menu="@menu/bottom_nav" />
+        app:menu="@menu/bottom" />
 
 
 
