@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        mBottomNV.setSelectedItemId(R.id.navigation_1);
+        mBottomNV.setSelectedItemId(R.id.navigation_2);
     }
     private void BottomNavigate(int id) {  //BottomNavigation 페이지 변경
         String tag = String.valueOf(id);
