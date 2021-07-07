@@ -5,6 +5,11 @@
     <stroke
         android:width="5dp"
         android:color="#F6E119" />
+    <padding
+        android:bottom="20px"
+        android:top="20px"
+        android:left="20px"
+        android:right="20px"/>
     <!--corners
         android:topLeftRadius="10dp"
         android:topRightRadius="10dp"

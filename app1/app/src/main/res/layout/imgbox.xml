@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <GridLayout
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:background="#F6E119"
+        android:columnCount="2"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
+        android:rowCount="2">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img3" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img3" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img3" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img3" />
+    </GridLayout>
+    <TextView
+        android:id="@+id/gtext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="그룹이름"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,10 +13,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/sun2"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|right"
+            android:src="@drawable/information"
+            android:layout_marginRight="20dp"/>
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00000000"
+            android:layout_gravity="center|left"
+            android:src="@drawable/back2"
+            android:layout_marginLeft="10dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TRIPLE"
+            android:text="그룹명"
             android:textColor="@color/black"
             android:layout_margin="5dp"
             android:layout_gravity="center"
@@ -26,24 +39,6 @@
             android:textSize="50dp"/>
 
     </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.1">
-        <EditText
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="9"/>
-        <ImageButton
-            android:layout_weight="1"
-            android:layout_width="15dp"
-            android:layout_height="50dp"
-            android:background="#00000000"
-            android:src="@drawable/zoom2"
-            android:layout_marginRight="10dp"/>
-    </LinearLayout>
     <FrameLayout
         android:background="#fffcef"
         android:layout_width="match_parent"
@@ -61,16 +56,32 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            app:backgroundTint="#dd3f47"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@android:drawable/ic_menu_add"
-            android:layout_margin="16dp" />
+            android:orientation="vertical">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|right"
+                android:layout_marginTop="16dp"
+                app:backgroundTint="#dd3f47"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/download" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/up"
+                app:backgroundTint="#dd3f47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/upload"
+                android:layout_margin="16dp" />
+
+
+        </LinearLayout>
+
     </FrameLayout>
-
-
 </LinearLayout>
