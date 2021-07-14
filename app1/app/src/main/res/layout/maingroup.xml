@@ -10,6 +10,7 @@
         android:background="#fff2c1">
 
         <ImageView
+            android:id="@+id/info"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center|right"
@@ -47,7 +48,7 @@
             android:foreground="#BFFFFCEF"/>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="20dp"
-            android:id="@+id/recyclerView"
+            android:id="@+id/grecyclerView"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

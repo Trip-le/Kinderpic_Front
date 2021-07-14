@@ -23,24 +23,28 @@
         android:rowCount="2">
 
         <ImageView
+            android:id="@+id/gimg1"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:src="@drawable/img3" />
 
         <ImageView
+            android:id="@+id/gimg2"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:src="@drawable/img3" />
 
         <ImageView
+            android:id="@+id/gimg3"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:src="@drawable/img3" />
 
         <ImageView
+            android:id="@+id/gimg4"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"

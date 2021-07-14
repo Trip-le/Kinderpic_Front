@@ -2,7 +2,9 @@ package com.example.app1;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNV;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("상태","체크");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -42,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void BottomNavigate(int id) {  //BottomNavigation 페이지 변경
         String tag = String.valueOf(id);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
         if (currentFragment != null) {
@@ -51,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        Log.d("상태",tag);
         if (fragment == null) {
             if (id == R.id.navigation_1) {
                 fragment = new FragmentPage1();
 
             } else if (id == R.id.navigation_2){
-
+                Toast myToast = Toast.makeText(this.getApplicationContext(),tag, Toast.LENGTH_SHORT);
+                myToast.show();
                 fragment = new FragmentPage2();
             }else {
                 fragment = new FragmentPage3();
@@ -65,12 +72,27 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.content_layout, fragment, tag);
         } else {
             fragmentTransaction.show(fragment);
+            Log.d("상태2",tag);
         }
 
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
+        Log.d("상태","확인");
 
+    }
+
+    public void replaceFragment() {
+        Fragment fragment=fragmentManager.findFragmentByTag("mg");
+        if (fragment == null) {
+            fragment=new MainGroup();
+            fragmentTransaction.add(R.id.content_layout, fragment, "mg");
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
 
     }
 

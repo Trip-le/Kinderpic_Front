@@ -1,5 +1,6 @@
 package com.example.app1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +33,7 @@ public class FragmentPage2 extends Fragment {
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"클릭", Toast.LENGTH_SHORT);
                 myToast.show();
+                ((MainActivity)getActivity()).replaceFragment();
             }
         });
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
