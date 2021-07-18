@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNV;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
-
+    String tag2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("상태","체크");
@@ -57,13 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         Log.d("상태",tag);
+        tag2=tag;
         if (fragment == null) {
             if (id == R.id.navigation_1) {
                 fragment = new FragmentPage1();
-
             } else if (id == R.id.navigation_2){
-                Toast myToast = Toast.makeText(this.getApplicationContext(),tag, Toast.LENGTH_SHORT);
-                myToast.show();
                 fragment = new FragmentPage2();
             }else {
                 fragment = new FragmentPage3();
@@ -82,14 +80,103 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void replaceFragment() {
-        Fragment fragment=fragmentManager.findFragmentByTag("mg");
+    public void AddGroup() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag("ag");
         if (fragment == null) {
-            fragment=new MainGroup();
-            fragmentTransaction.add(R.id.content_layout, fragment, "mg");
+            fragment=new AddGroup();
+            fragmentTransaction.add(R.id.content_layout, fragment, "ag");
+        } else {
+            fragmentTransaction.remove(fragment);
+            fragment=new AddGroup();
+            fragmentTransaction.add(R.id.content_layout, fragment, "ag");
+        }
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
+    public void addGroup2() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag(tag2);
+        if (fragment == null) {
+            fragment=new FragmentPage2();
+            fragmentTransaction.add(R.id.content_layout, fragment, tag2);
         } else {
             fragmentTransaction.show(fragment);
         }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
+    public void MainGroup(String name) {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Bundle bundle=new Bundle();
+        bundle.putString("name",name);
+
+
+        Fragment fragment=fragmentManager.findFragmentByTag("mg");
+        if (fragment == null) {
+            fragment=new MainGroup();
+            fragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.content_layout, fragment, "mg");
+        } else {
+            fragmentTransaction.remove(fragment);
+            fragment=new MainGroup();
+            fragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.content_layout, fragment, "mg");
+        }
+
+
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
+    public void AddFriend() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag("af");
+        if (fragment == null) {
+            fragment=new AddFriend();
+            fragmentTransaction.add(R.id.content_layout, fragment, "af");
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();

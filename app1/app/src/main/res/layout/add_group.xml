@@ -23,34 +23,38 @@
         android:background="#fffcef"
         android:orientation="vertical">
         <EditText
+            android:id="@+id/Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="그룹명"
-            android:textColor="#B7B3A4"
+            android:hint="그룹명"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"/>
         <EditText
+            android:id="@+id/GDay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="날짜 (ex 2021-05-09)"
-            android:textColor="#B7B3A4"
+            android:hint="날짜 (ex 2021-05-09)"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
         <EditText
+            android:id="@+id/GPlace"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="장소"
-            android:textColor="#B7B3A4"
+            android:hint="장소"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
         <EditText
+            android:id="@+id/MyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이름(실명)"
-            android:textColor="#B7B3A4"
+            android:hint="이름(실명)"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -67,6 +71,7 @@
                 android:layout_marginTop="20dp"/>
 
             <TextView
+                android:id="@+id/FName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="50dp"
@@ -78,6 +83,7 @@
                 android:padding="20dp"/>
         </LinearLayout>
         <Button
+            android:id="@+id/FaddB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -87,6 +93,7 @@
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <Button
+            android:id="@+id/GaddB"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginLeft="30dp"

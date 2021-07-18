@@ -31,9 +31,7 @@ public class FragmentPage2 extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"클릭", Toast.LENGTH_SHORT);
-                myToast.show();
-                ((MainActivity)getActivity()).replaceFragment();
+                ((MainActivity)getActivity()).AddGroup();
             }
         });
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);

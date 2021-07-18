@@ -79,6 +79,7 @@
                 android:layout_gravity="top"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/FAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="친구추가"
@@ -86,6 +87,7 @@
                     android:layout_margin="10dp"
                     android:textColor="#FFEA9F"/>
                 <Button
+                    android:id="@+id/FDel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="친구삭제"
