@@ -72,7 +72,7 @@
                     android:textSize="20dp" />
             </LinearLayout>
             <ImageView
-                android:id="@+id/leave"
+                android:id="@+id/profile_next"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center"
                 android:layout_width="20dp"
@@ -111,6 +111,7 @@
             android:layout_height="1.2dp"
             android:background="@drawable/line2"/>
         <ImageView
+            android:id="@+id/upload_face"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -142,12 +143,6 @@
             android:layout_width="370dp"
             android:layout_height="1.2dp"
             android:background="@drawable/line2"/>
-        <ImageView
-            android:layout_marginLeft="150dp"
-            android:layout_gravity="center"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_next"/>
     </FrameLayout>
     <FrameLayout
         android:layout_marginTop="330dp"
@@ -186,6 +181,7 @@
             android:textSize="20dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/notice"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -207,6 +203,7 @@
             android:textSize="20dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/qna"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -228,6 +225,7 @@
             android:textSize="20dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/service"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -249,6 +247,7 @@
             android:textSize="20dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/personal_info"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"

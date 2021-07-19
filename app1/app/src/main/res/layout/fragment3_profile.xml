@@ -104,6 +104,7 @@
             android:layout_height="1.2dp"
             android:background="@drawable/line2"/>
         <ImageView
+            android:id="@+id/profile_mod"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"
@@ -136,6 +137,7 @@
             android:layout_height="1.2dp"
             android:background="@drawable/line2"/>
         <ImageView
+            android:id="@+id/logout"
             android:layout_marginLeft="150dp"
             android:layout_gravity="center"
             android:layout_width="20dp"

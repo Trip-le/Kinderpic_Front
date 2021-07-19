@@ -1,64 +1,76 @@
 package com.example.app1;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentPage3_profile#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.app1.R;
+
 public class FragmentPage3_profile extends Fragment {
+    ImageView profile_mod;
+    ImageView logout;
+    TextView leave;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentPage3_profile() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentPage3_profile.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentPage3_profile newInstance(String param1, String param2) {
-        FragmentPage3_profile fragment = new FragmentPage3_profile();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment3_profile, container, false);
     }
-}
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        profile_mod = view.findViewById(R.id.profile_mod);
+        profile_mod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).frag3_profile_modi();
+            }
+        });
+
+        logout = view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog1();
+            }
+        });
+
+        leave = view.findViewById(R.id.leave);
+        leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog2();
+            }
+        });
+    }
+
+    private void showAlertDialog1() {
+        AlertDialog.Builder logoutdia = new AlertDialog.Builder(getView().getContext());
+        View dialogView = View.inflate(getView().getContext(), R.layout.dialog_logout, null);
+        logoutdia.setView(dialogView);
+        logoutdia.show();
+
+    }
+
+    private void showAlertDialog2() {
+        AlertDialog.Builder leavedia = new AlertDialog.Builder(getView().getContext());
+        View dialogView = View.inflate(getView().getContext(), R.layout.dialog_leave, null);
+        leavedia.setView(dialogView);
+        leavedia.show();
+    }
+
+   }

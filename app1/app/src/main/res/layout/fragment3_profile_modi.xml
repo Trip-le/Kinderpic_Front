@@ -80,6 +80,7 @@
                 android:layout_height="60dp"
                 android:src="@drawable/ic_user"/>
             <LinearLayout
+                android:id="@+id/pic_modi"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:layout_width="60dp"
@@ -163,6 +164,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/name_modi"
         android:layout_marginTop="148dp"
         android:layout_marginLeft="330dp"
         android:layout_width="60dp"
@@ -185,6 +187,7 @@
         android:hint="  이메일을 입력하세요"
         android:background="@drawable/profile_rect2"/>
     <LinearLayout
+        android:id="@+id/email_send"
         android:layout_marginTop="301.7dp"
         android:layout_marginLeft="330dp"
         android:layout_width="60dp"
@@ -200,6 +203,7 @@
             android:textColor="@color/black"/>
     </LinearLayout>
     <EditText
+        android:id="@+id/email_ans"
         android:visibility="invisible"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="340dp"
@@ -208,6 +212,7 @@
         android:hint="  인증번호 확인"
         android:background="@drawable/profile_rect2"/>
     <LinearLayout
+        android:id="@+id/emailans_check"
         android:visibility="invisible"
         android:layout_marginTop="342.3dp"
         android:layout_marginLeft="330dp"
@@ -233,6 +238,7 @@
         android:textSize="10dp"
         android:textColor="#A6FFA4A9"/>
     <EditText
+        android:id="@+id/new_pw1"
         android:visibility="invisible"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="393dp"
@@ -241,6 +247,7 @@
         android:hint="  새 비밀번호를 입력하세요"
         android:background="@drawable/profile_rect2"/>
     <EditText
+        android:id="@+id/new_pw2"
         android:visibility="invisible"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="433dp"
@@ -256,6 +263,7 @@
         android:layout_height="40dp"
         android:background="@drawable/profile_rect_shadow"/>
     <LinearLayout
+        android:id="@+id/pw_modi"
         android:visibility="invisible"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="473dp"

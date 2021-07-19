@@ -57,6 +57,7 @@
             android:textSize="15dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/qna1"
             android:angle="270"
             android:layout_marginLeft="110dp"
             android:layout_gravity="center"
@@ -71,6 +72,7 @@
         android:layout_height="1.2dp"
         android:background="@drawable/line2"/>
     <LinearLayout
+        android:id="@+id/answer1"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
@@ -109,6 +111,7 @@
             android:textSize="15dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/qna2"
             android:angle="270"
             android:layout_marginLeft="202dp"
             android:layout_gravity="center"
@@ -123,6 +126,7 @@
         android:layout_height="1.2dp"
         android:background="@drawable/line2"/>
     <LinearLayout
+        android:id="@+id/answer2"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
@@ -161,6 +165,7 @@
             android:textSize="15dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/qna3"
             android:angle="270"
             android:layout_marginLeft="202dp"
             android:layout_gravity="center"
@@ -175,6 +180,7 @@
         android:layout_height="1.2dp"
         android:background="@drawable/line2"/>
     <LinearLayout
+        android:id="@+id/answer3"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
@@ -213,6 +219,7 @@
             android:textSize="15dp"
             android:textColor="#1C1C1C"/>
         <ImageView
+            android:id="@+id/qna4"
             android:angle="270"
             android:layout_marginLeft="161dp"
             android:layout_gravity="center"
@@ -227,6 +234,7 @@
         android:layout_height="1.2dp"
         android:background="@drawable/line2"/>
     <LinearLayout
+        android:id="@+id/answer4"
         android:visibility="gone"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"

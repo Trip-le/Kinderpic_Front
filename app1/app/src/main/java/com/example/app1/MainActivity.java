@@ -183,4 +183,74 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    public void frag3_profile() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag("frag3_profile");
+        if (fragment == null) {
+            fragment=new FragmentPage3_profile();
+            fragmentTransaction.add(R.id.content_layout, fragment, "frag3_profile");
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
+    public void qna() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag("frag3_qna");
+        if (fragment == null) {
+            fragment=new FragmentPage3_FAQ();
+            fragmentTransaction.add(R.id.content_layout, fragment, "frag3_qna");
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
+    public void frag3_profile_modi() {
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment);
+        }
+
+        Fragment fragment=fragmentManager.findFragmentByTag("frag3_profile_modi");
+        if (fragment == null) {
+            fragment=new FragmentPage3_profile_modi();
+            fragmentTransaction.add(R.id.content_layout, fragment, "frag3_profile_modi");
+        } else {
+            fragmentTransaction.show(fragment);
+        }
+
+        fragmentTransaction.setPrimaryNavigationFragment(fragment);
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.commitNow();
+
+    }
+
 }
