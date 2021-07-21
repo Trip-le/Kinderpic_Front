@@ -43,18 +43,21 @@
             android:textColor="#B7B3A4"
             android:backgroundTint="#DD3F47"/>
         <Button
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
             android:textColor="#FFFCEF"
             android:backgroundTint="#DD3F47"/>
         <Button
+            android:id="@+id/join"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login/Join"
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <TextView
+            android:id="@+id/find"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디/비밀번호 찾기"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +27,8 @@ public class FragmentPage2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        View v= inflater.inflate(R.layout.fragment2,container,false);
+                View v= inflater.inflate(R.layout.fragment2,container,false);
+
         FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,10 +36,21 @@ public class FragmentPage2 extends Fragment {
                 ((MainActivity)getActivity()).AddGroup();
             }
         });
+
+        ImageButton seach = (ImageButton) v.findViewById(R.id.seach);
+        seach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"검색", Toast.LENGTH_SHORT);
+                myToast.show();
+            }
+        });
+
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
         GridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
         recyclerView.setLayoutManager(GridLayoutManager);
         Gadapter= new adapter();
+        Gadapter.items.clear();
         adapter.items.add(new group("a",""));
         adapter.items.add(new group("b",""));
         adapter.items.add(new group("c",""));
