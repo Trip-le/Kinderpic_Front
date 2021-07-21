@@ -7,8 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="150dp"
-        >
+        android:layout_marginTop="150dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,24 +30,27 @@
         android:orientation="vertical"
         android:layout_margin="30dp">
         <EditText
+            android:id="@+id/id_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID"
-            android:textColor="#B7B3A4"
+            android:hint="ID"
             android:backgroundTint="#DD3F47"/>
         <EditText
+            android:id="@+id/pw_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="password"
-            android:textColor="#B7B3A4"
+            android:hint="password"
+            android:inputType="textPassword"
             android:backgroundTint="#DD3F47"/>
         <Button
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
             android:textColor="#FFFCEF"
             android:backgroundTint="#DD3F47"/>
         <Button
+            android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login/Join"

@@ -34,10 +34,10 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp">
             <EditText
+                android:id="@+id/_email"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:text="이메일"
-                android:textColor="#B7B3A4"/>
+                android:hint="이메일"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,26 +46,27 @@
                 android:backgroundTint="#DD3F47"/>
         </LinearLayout>
         <EditText
+            android:id="@+id/_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textColor="#B7B3A4"
+            android:hint="비밀번호"
+            android:inputType="textPassword"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호 확인"
-            android:textColor="#B7B3A4"
+            android:hint="비밀번호 확인"
+            android:inputType="textPassword"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
         <EditText
+            android:id="@+id/_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이름(실명)"
-            android:textColor="#B7B3A4"
+            android:hint="이름(실명)"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -77,10 +78,10 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp">
             <EditText
+                android:id="@+id/_birth"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:text="생년월일(8자리)"
-                android:textColor="#B7B3A4"/>
+                android:hint="생년월일(8자리)"/>
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,6 +117,7 @@
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <Button
+            android:id="@+id/signupBtn"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:text="회원가입"
