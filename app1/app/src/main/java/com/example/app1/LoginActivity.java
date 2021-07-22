@@ -1,6 +1,7 @@
 package com.example.app1;
 
 import android.content.Intent;
+<<<<<<< HEAD
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,11 +27,26 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEdt;
     private EditText passwordEdt;
+=======
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LoginActivity extends AppCompatActivity {
+
+>>>>>>> one/main
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+<<<<<<< HEAD
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -96,14 +112,43 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<LoginResult> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, t.getMessage(),
                         Toast.LENGTH_LONG).show();
+=======
+        Button login=findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button join=findViewById(R.id.join);
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), JoinActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView find=findViewById(R.id.find);
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast myToast = Toast.makeText(getApplicationContext(),"찾기", Toast.LENGTH_SHORT);
+                myToast.show();
+>>>>>>> one/main
             }
         });
     }
 
+<<<<<<< HEAD
     private void handleSignup() {
         Intent intent = new Intent(this, JoinActivity.class); // 두번째 인자에 이동할 액티비티
 
         startActivityForResult(intent, 0);
     }
 
+=======
+>>>>>>> one/main
 }

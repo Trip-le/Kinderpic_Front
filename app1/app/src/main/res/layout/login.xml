@@ -50,13 +50,18 @@
             android:textColor="#FFFCEF"
             android:backgroundTint="#DD3F47"/>
         <Button
+<<<<<<< HEAD
             android:id="@+id/signup"
+=======
+            android:id="@+id/join"
+>>>>>>> one/main
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login/Join"
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <TextView
+            android:id="@+id/find"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디/비밀번호 찾기"

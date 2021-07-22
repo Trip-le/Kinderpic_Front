@@ -46,9 +46,8 @@
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:background="#FFEA9F"
-                android:text="친구 아이디 검색"
+                android:hint="친구 아이디 검색"
                 android:layout_marginLeft="20dp"
-                android:textColor="#B7B3A4"
                 />
         </FrameLayout>
         <androidx.recyclerview.widget.RecyclerView

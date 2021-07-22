@@ -52,8 +52,6 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
-
                     MainActivity activity = (MainActivity)_ctx;
                     activity.MainGroup(Data.getName());
                 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainGroup extends Fragment {
     private GridLayoutManager GridLayoutManager;
@@ -43,6 +47,33 @@ public class MainGroup extends Fragment {
             @Override
             public void onClick(View view) {
                 showinfo();
+            }
+        });
+
+
+        ImageButton back = (ImageButton) v.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).addGroup2();
+            }
+        });
+
+        FloatingActionButton down = (FloatingActionButton) v.findViewById(R.id.down);
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"다운로드", Toast.LENGTH_SHORT);
+                myToast.show();
+            }
+        });
+
+        FloatingActionButton up = (FloatingActionButton) v.findViewById(R.id.up);
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"업로드", Toast.LENGTH_SHORT);
+                myToast.show();
             }
         });
 
