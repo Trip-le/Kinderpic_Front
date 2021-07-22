@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://172.30.1.25:3000";
     private EditText emailEdt;
     private EditText nameEdt;
     private EditText birthEdt;
@@ -53,7 +53,7 @@ public class JoinActivity extends AppCompatActivity {
                 map.put("email", emailEdt.getText().toString());
                 map.put("password", passwordEdt.getText().toString());
                 map.put("name", nameEdt.getText().toString());
-                map.put("birth", nameEdt.getText().toString());
+                map.put("birth", birthEdt.getText().toString());
 
                 Call<Void> call = retrofitInterface.executeSignup(map);
 
