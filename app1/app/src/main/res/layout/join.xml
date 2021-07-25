@@ -38,8 +38,8 @@
                 android:id="@+id/email"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:text="이메일"
-                android:textColor="#B7B3A4"/>
+                android:hint="이메일"
+                android:textColor="@color/black"/>
             <Button
                 android:id="@+id/auth"
                 android:layout_width="wrap_content"
@@ -52,8 +52,8 @@
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textColor="#B7B3A4"
+            android:hint="비밀번호"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -61,8 +61,8 @@
             android:id="@+id/passCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호 확인"
-            android:textColor="#B7B3A4"
+            android:hint="비밀번호 확인"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -70,8 +70,8 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이름(실명)"
-            android:textColor="#B7B3A4"
+            android:hint="이름(실명)"
+            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -86,8 +86,8 @@
                 android:id="@+id/birth"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:text="생년월일(8자리)"
-                android:textColor="#B7B3A4"/>
+                android:hint="생년월일(8자리)"
+                android:textColor="@color/black"/>
             <RadioGroup
                 android:id="@+id/gen"
                 android:layout_width="wrap_content"

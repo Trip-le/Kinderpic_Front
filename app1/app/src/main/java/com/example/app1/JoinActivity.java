@@ -13,8 +13,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class JoinActivity extends AppCompatActivity {
 
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://172.30.1.25:3000";
     private EditText email;
     private EditText pass;
     private EditText passCheck;
@@ -27,6 +38,13 @@ public class JoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.join);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
 
         email=findViewById(R.id.email);
         pass=findViewById(R.id.pass);
@@ -67,12 +85,38 @@ public class JoinActivity extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!(pass.getText().toString().equals(passCheck.getText().toString()))){
+                    Toast.makeText(JoinActivity.this, "패스워드가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+                }else {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("email", email.getText().toString());
+                    map.put("password", pass.getText().toString());
+                    map.put("name", name.getText().toString());
+                    map.put("birth", birth.getText().toString());
 
-                Toast myToast = Toast.makeText(getApplicationContext(),"회원가입이 완료되었습니다.", Toast.LENGTH_SHORT);
-                myToast.show();
+                    Call<Void> call = retrofitInterface.executeSignup(map);
 
-                Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(JoinActivity.this,
+                                        "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
+                            } else if (response.code() == 400) {
+                                Toast.makeText(JoinActivity.this, "이미 가입된 정보입니다.",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(JoinActivity.this, t.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         });
 

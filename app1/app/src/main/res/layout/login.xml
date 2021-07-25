@@ -31,16 +31,18 @@
         android:orientation="vertical"
         android:layout_margin="30dp">
         <EditText
+            android:id="@+id/logid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID"
-            android:textColor="#B7B3A4"
+            android:hint="ID"
+            android:textColor="@color/black"
             android:backgroundTint="#DD3F47"/>
         <EditText
+            android:id="@+id/logpass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="password"
-            android:textColor="#B7B3A4"
+            android:hint="password"
+            android:textColor="@color/black"
             android:backgroundTint="#DD3F47"/>
         <Button
             android:id="@+id/login"
