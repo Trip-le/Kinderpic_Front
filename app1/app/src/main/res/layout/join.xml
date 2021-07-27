@@ -35,19 +35,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp">
             <EditText
-<<<<<<< HEAD
-                android:id="@+id/_email"
-=======
                 android:id="@+id/email"
->>>>>>> one/main
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:hint="이메일"/>
-=======
                 android:hint="이메일"
                 android:textColor="@color/black"/>
->>>>>>> one/main
             <Button
                 android:id="@+id/auth"
                 android:layout_width="wrap_content"
@@ -57,19 +49,12 @@
                 android:backgroundTint="#DD3F47"/>
         </LinearLayout>
         <EditText
-<<<<<<< HEAD
-            android:id="@+id/_password"
-=======
             android:id="@+id/pass"
->>>>>>> one/main
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
-<<<<<<< HEAD
             android:inputType="textPassword"
-=======
             android:textColor="@color/black"
->>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -78,27 +63,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호 확인"
-<<<<<<< HEAD
             android:inputType="textPassword"
-=======
             android:textColor="@color/black"
->>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
         <EditText
-<<<<<<< HEAD
-            android:id="@+id/_name"
-=======
             android:id="@+id/name"
->>>>>>> one/main
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이름(실명)"
-<<<<<<< HEAD
-=======
             android:textColor="@color/black"
->>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -110,19 +85,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp">
             <EditText
-<<<<<<< HEAD
-                android:id="@+id/_birth"
-=======
                 android:id="@+id/birth"
->>>>>>> one/main
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:hint="생년월일(8자리)"/>
-=======
                 android:hint="생년월일(8자리)"
                 android:textColor="@color/black"/>
->>>>>>> one/main
             <RadioGroup
                 android:id="@+id/gen"
                 android:layout_width="wrap_content"
@@ -162,11 +129,7 @@
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <Button
-<<<<<<< HEAD
-            android:id="@+id/signupBtn"
-=======
             android:id="@+id/join"
->>>>>>> one/main
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:text="회원가입"
