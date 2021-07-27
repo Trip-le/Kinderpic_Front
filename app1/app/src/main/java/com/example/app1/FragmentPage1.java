@@ -9,11 +9,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app1.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class FragmentPage1 extends Fragment {
+    private fadapter Fadapter;
+    private LinearLayoutManager LinearLayoutManager;
 
     @Nullable
     @Override
@@ -28,7 +30,15 @@ public class FragmentPage1 extends Fragment {
             }
         });
 
-
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView1);
+        LinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(LinearLayoutManager);
+        Fadapter= new fadapter();
+        Fadapter.items.clear();
+        fadapter.items.add(new group("a",""));
+        fadapter.items.add(new group("b",""));
+        fadapter.items.add(new group("c",""));
+        recyclerView.setAdapter(Fadapter);
         return v;
     }
     @Override
