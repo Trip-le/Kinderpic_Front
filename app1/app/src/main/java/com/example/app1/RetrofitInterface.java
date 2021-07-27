@@ -13,4 +13,8 @@ public interface RetrofitInterface {
 
     @POST("/signup")
     Call<Void> executeSignup (@Body HashMap<String, String> map);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> one/main

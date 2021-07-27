@@ -17,4 +17,8 @@ public class LoginResult {
     public String getPassword() { return password; }
 
     public String getBirth() { return birth; }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> one/main

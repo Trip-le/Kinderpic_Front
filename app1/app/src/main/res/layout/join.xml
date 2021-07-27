@@ -42,7 +42,12 @@
 >>>>>>> one/main
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:hint="이메일"/>
+=======
+                android:hint="이메일"
+                android:textColor="@color/black"/>
+>>>>>>> one/main
             <Button
                 android:id="@+id/auth"
                 android:layout_width="wrap_content"
@@ -60,7 +65,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
+<<<<<<< HEAD
             android:inputType="textPassword"
+=======
+            android:textColor="@color/black"
+>>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -69,7 +78,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호 확인"
+<<<<<<< HEAD
             android:inputType="textPassword"
+=======
+            android:textColor="@color/black"
+>>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -82,6 +95,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이름(실명)"
+<<<<<<< HEAD
+=======
+            android:textColor="@color/black"
+>>>>>>> one/main
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"/>
@@ -100,7 +117,12 @@
 >>>>>>> one/main
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:hint="생년월일(8자리)"/>
+=======
+                android:hint="생년월일(8자리)"
+                android:textColor="@color/black"/>
+>>>>>>> one/main
             <RadioGroup
                 android:id="@+id/gen"
                 android:layout_width="wrap_content"
