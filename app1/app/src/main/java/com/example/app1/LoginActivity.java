@@ -85,7 +85,8 @@ public class LoginActivity extends AppCompatActivity {
         map.put("password", logpass.getText().toString());
 
         Call<LoginResult> call = retrofitInterface.executeLogin(map);
-
+        changeMain();
+        /*
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
@@ -109,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, t.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
 }
