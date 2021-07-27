@@ -50,11 +50,8 @@
             android:textColor="#FFFCEF"
             android:backgroundTint="#DD3F47"/>
         <Button
-<<<<<<< HEAD
             android:id="@+id/signup"
-=======
             android:id="@+id/join"
->>>>>>> one/main
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login/Join"

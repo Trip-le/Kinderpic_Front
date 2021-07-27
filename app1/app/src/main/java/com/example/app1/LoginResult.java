@@ -1,7 +1,5 @@
 package com.example.app1;
 
-import com.google.gson.annotations.SerializedName;
-
 public class LoginResult {
     private String name;
     private String email;
