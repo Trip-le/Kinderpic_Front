@@ -25,6 +25,7 @@ public class MainGroup extends Fragment {
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     Dialog Dinfo;
+    Dialog Dname;
     String GName;
     @Nullable
     @Override
@@ -50,6 +51,16 @@ public class MainGroup extends Fragment {
             }
         });
 
+        Dname=new Dialog(container.getContext());
+        Dname.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Dname.setContentView(R.layout.groupname);
+
+        Gname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showinfo2();
+            }
+        });
 
         ImageButton back = (ImageButton) v.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -103,12 +114,25 @@ public class MainGroup extends Fragment {
         tv1.setText(GName);
         tv2.setText(tv2.getText()+"서울");
         tv3.setText(tv3.getText()+"3.14");
-        tv4.setText(tv4.getText()+"a,b,c,d");
+        tv4.setText(tv4.getText()+"덕성여대 컴공과");
 
         Dinfo.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dinfo.dismiss();
+            }
+        });
+    }
+
+    public void showinfo2(){
+        Dname.show(); // 다이얼로그 띄우기
+        TextView names=Dname.findViewById(R.id.namearr);
+        names.setText(names.getText()+" "+"a b c d");
+
+        Dname.findViewById(R.id.ok2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dname.dismiss();
             }
         });
     }

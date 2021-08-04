@@ -1,5 +1,6 @@
 package com.example.app1;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 
 public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     public static ArrayList<group> items=new ArrayList<>();
+    private Dialog dialog;
     @Override
     public int getItemCount() {
         return items.size();
@@ -38,11 +42,10 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         holder.min.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.remove(position);
-                notifyItemRemoved(position);
-                notifyDataSetChanged();
-                holder.min.setVisibility(View.GONE);
-                holder.sign=0;
+                dialog=new Dialog(holder._ctx);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_delete);
+                showDialog(item, position, holder);
             }
         });
     }
@@ -92,6 +95,35 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
             tv.setText(data.getName());
         }
 
+    }
+
+    public void showDialog(group item, int position, ViewHolder holder){
+        dialog.show(); // 다이얼로그 띄우기
+        TextView cen=dialog.findViewById(R.id.cen);
+        TextView clear=dialog.findViewById(R.id.clear);
+        TextView tv=dialog.findViewById(R.id.Text);
+        tv.setText(holder.Data.getName()+" "+tv.getText());
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                items.remove(position);
+                notifyItemRemoved(position);
+                notifyDataSetChanged();
+                holder.min.setVisibility(View.GONE);
+                holder.sign=0;
+                dialog.dismiss();
+            }
+        });
+
+        cen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.min.setVisibility(View.GONE);
+                holder.sign=0;
+                dialog.dismiss();
+            }
+        });
     }
 
 }

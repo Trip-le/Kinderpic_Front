@@ -53,7 +53,7 @@
             android:id="@+id/MyName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름(실명)"
+            android:hint="학교/학급명"
             android:textColor="@color/black"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="그룹 멤버 목록"
+                android:text="그룹 아이디"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:layout_marginTop="20dp"/>
@@ -78,7 +78,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="50dp"
                 android:background="@drawable/f_box4"
-                android:text="존재하지 않습니다\n그룹 멤버를 추가하세요"
+                android:text="정보 입력 후 그룹 아이디를 생성해주세요."
                 android:textAlignment="center"
                 android:padding="20dp"/>
         </LinearLayout>
@@ -89,7 +89,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:text="그룹 맴버 추가"
+            android:text="그룹 아이디 생성"
             android:textColor="#DD3F47"
             android:backgroundTint="#FFEA9F"/>
         <Button
