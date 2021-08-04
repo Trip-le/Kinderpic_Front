@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="친구목록"
+            android:text="그룹목록"
             android:textColor="@color/black"
             android:layout_margin="5dp"
             android:layout_gravity="center"
@@ -43,7 +43,7 @@
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:background="#FFEA9F"
-            android:hint="친구 아이디 검색"
+            android:hint="그룹 아이디 검색"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
@@ -78,22 +78,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
                 android:gravity="center">
-                <Button
-                    android:id="@+id/FAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="친구추가"
-                    android:backgroundTint="#DD3F47"
-                    android:layout_margin="10dp"
-                    android:textColor="#FFEA9F"/>
-                <Button
-                    android:id="@+id/FDel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="친구삭제"
-                    android:backgroundTint="#DD3F47"
-                    android:layout_margin="10dp"
-                    android:textColor="#FFEA9F"/>
             </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView1"
