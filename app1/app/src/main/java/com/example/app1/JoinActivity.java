@@ -20,7 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-//원본으로
+
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
@@ -29,7 +29,6 @@ public class JoinActivity extends AppCompatActivity {
     private EditText pass;
     private EditText passCheck;
     private EditText name;
-    private EditText birth;
     private RadioGroup gen;
     private Button join;
     @Override
@@ -48,7 +47,6 @@ public class JoinActivity extends AppCompatActivity {
         pass = findViewById(R.id.pass);
         passCheck = findViewById(R.id.passCheck);
         name = findViewById(R.id.name);
-        birth = findViewById(R.id.birth);
         gen = findViewById(R.id.gen);
 
         ImageView pro=findViewById(R.id.profile);
@@ -91,7 +89,6 @@ public class JoinActivity extends AppCompatActivity {
                     map.put("email", email.getText().toString());
                     map.put("password", pass.getText().toString());
                     map.put("name", name.getText().toString());
-                    map.put("birth", birth.getText().toString());
 
                     Call<Void> call = retrofitInterface.executeSignup(map);
 
