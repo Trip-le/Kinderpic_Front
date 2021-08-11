@@ -90,12 +90,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/gen1"
+                    android:id="@+id/teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="선생님"/>
                 <RadioButton
-                    android:id="@+id/gen2"
+                    android:id="@+id/student"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="학생"/>

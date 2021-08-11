@@ -20,13 +20,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
+
         <Button
-            android:layout_margin="10dp"
             android:id="@+id/group_yes"
             android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_height="38dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/join_yes"
             android:text="확인"
-            android:background="@drawable/logout_yes"
             android:textColor="@color/white"/>
         <Button
             android:layout_margin="10dp"
@@ -34,7 +35,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:text="취소"
-            android:background="@drawable/logout_no"
+            android:background="@drawable/join_no"
             android:textColor="@color/black"/>
 
     </LinearLayout>
