@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fffcef">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff2c1">
+        <ImageView
+            android:layout_gravity="top|right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/sun2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이용 방법"
+            android:textColor="@color/black"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/permanentmarkerregular"
+            android:textSize="30dp"/>
+    </FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text=" - 그룹 생성하기"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="1. 아래 왼쪽의 돋보기버튼을 눌러 해당 화면에서 \n그룹 고유번호를 생성한다."
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="2. 고유번호를 부모님들과 공유하면 해당 그룹에 \n들어올 수 있다."
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="3. 그룹에 사진을 공유하여 어플을 이용한다."
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="@drawable/line"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="- 사진공유 및 다운로드"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="1. 아래 가운데의 그룹버튼을 눌러 해당 화면에서 \n원하는 그룹을 눌러 들어간다."
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="2. 선생님 - 원하는 그룹에 들어갔을 때 오른쪽 하단의 \n업로드 버튼을 통해 사진을 공유한다."
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="3. 부모님 - 오른쪽 하단의 다운로드 버튼을 통해\n 자녀의 사진을 다운로드받을 수 있다,"
+        android:textSize="17dp"
+        android:textColor="@color/black"/>
+
+
+
+
+
+</LinearLayout>

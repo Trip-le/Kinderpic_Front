@@ -28,7 +28,7 @@ public class FragmentPage2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-                View v= inflater.inflate(R.layout.fragment2,container,false);
+        View v= inflater.inflate(R.layout.fragment2,container,false);
 
         FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
