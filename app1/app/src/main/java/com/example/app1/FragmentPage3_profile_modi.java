@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class FragmentPage3_profile_modi extends Fragment {
     EditText new_pw1;
     EditText new_pw2;
     LinearLayout pw_modi;
+    ImageButton back;
 
     @Nullable
     @Override
@@ -40,6 +42,14 @@ public class FragmentPage3_profile_modi extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        back=view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).toSetting();
+            }
+        });
 
         name_modi = view.findViewById(R.id.name_modi);
         name_modi.setOnClickListener(new View.OnClickListener(){

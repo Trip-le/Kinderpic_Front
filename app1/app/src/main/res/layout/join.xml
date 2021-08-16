@@ -25,7 +25,7 @@
             android:layout_height="70dp"
             android:src="@drawable/profile"
             android:layout_gravity="center"
-            android:foreground="#BFFFFCEF"
+            android:scaleType="centerCrop"
             />
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +37,7 @@
             <EditText
                 android:id="@+id/email"
                 android:layout_width="260dp"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:hint="이메일"
                 android:textColor="@color/black"/>
@@ -50,6 +51,7 @@
         </LinearLayout>
         <EditText
             android:id="@+id/pass"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호"
@@ -60,6 +62,7 @@
             android:layout_marginTop="10dp"/>
         <EditText
             android:id="@+id/passCheck"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호 확인"
@@ -70,6 +73,7 @@
             android:layout_marginTop="10dp"/>
         <EditText
             android:id="@+id/name"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="이름"

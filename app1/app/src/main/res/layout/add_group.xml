@@ -24,6 +24,7 @@
         android:orientation="vertical">
         <EditText
             android:id="@+id/Name"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="그룹명"
@@ -33,6 +34,7 @@
             android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/GDay"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="날짜 (ex 2021-05-09)"
@@ -42,6 +44,7 @@
             android:layout_marginTop="10dp"/>
         <EditText
             android:id="@+id/GPlace"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="장소"
@@ -51,6 +54,7 @@
             android:layout_marginTop="10dp"/>
         <EditText
             android:id="@+id/MyName"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="학교/학급명"

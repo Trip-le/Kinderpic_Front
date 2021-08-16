@@ -22,13 +22,6 @@ public class FragmentPage1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View v= inflater.inflate(R.layout.fragment1,container,false);
-        Button Fadd = (Button)v.findViewById(R.id.FAdd);
-        Fadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity)getActivity()).AddFriend();
-            }
-        });
 
         RecyclerView recyclerView = v.findViewById(R.id.recyclerView1);
         LinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());

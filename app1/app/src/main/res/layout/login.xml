@@ -32,6 +32,7 @@
         android:layout_margin="30dp">
         <EditText
             android:id="@+id/logid"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ID"
@@ -39,6 +40,7 @@
             android:backgroundTint="#DD3F47"/>
         <EditText
             android:id="@+id/logpass"
+            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="password"

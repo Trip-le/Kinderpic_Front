@@ -26,6 +26,7 @@ public class FragmentPage3 extends Fragment {
     ImageView notice;
     ImageView service;
     ImageView personal_info;
+    ImageView mannual;
 
     @Nullable
     @Override
@@ -69,6 +70,15 @@ public class FragmentPage3 extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "공지사항입니다.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        mannual=view.findViewById(R.id.mannual);
+        mannual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).mannual();
+            }
+        });
+
         service = view.findViewById(R.id.service);
         service.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

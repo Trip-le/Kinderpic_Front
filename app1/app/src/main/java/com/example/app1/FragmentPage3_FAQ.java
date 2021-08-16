@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ public class FragmentPage3_FAQ extends Fragment {
     LinearLayout answer2;
     LinearLayout answer3;
     LinearLayout answer4;
+    ImageButton back;
 
 
     @Nullable
@@ -39,6 +41,15 @@ public class FragmentPage3_FAQ extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        back=view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).toSetting();
+            }
+        });
+
         qna1 = view.findViewById(R.id.qna1);
         answer1 = view.findViewById(R.id.answer1);
         qna1.setOnClickListener(new View.OnClickListener(){

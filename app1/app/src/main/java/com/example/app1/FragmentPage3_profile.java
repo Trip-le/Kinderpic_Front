@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ public class FragmentPage3_profile extends Fragment {
     ImageView profile_mod;
     ImageView logout;
     TextView leave;
+    ImageButton back;
 
     @Nullable
     @Override
@@ -32,6 +34,14 @@ public class FragmentPage3_profile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        back=view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).toSetting();
+            }
+        });
 
         profile_mod = view.findViewById(R.id.profile_mod);
         profile_mod.setOnClickListener(new View.OnClickListener() {

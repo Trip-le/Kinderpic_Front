@@ -22,6 +22,7 @@ import java.util.ArrayList;
 public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     public static ArrayList<group> items=new ArrayList<>();
     private Dialog dialog;
+    private Context context;
     @Override
     public int getItemCount() {
         return items.size();
@@ -31,6 +32,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
+        this.context=parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View itemView = inflater.inflate(R.layout.group, parent, false);
     return new ViewHolder(itemView, context);
@@ -107,6 +109,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context,"삭제하였습니다.",Toast.LENGTH_SHORT).show();
                 items.remove(position);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
@@ -119,6 +122,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         cen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(context,"취소하였습니다.",Toast.LENGTH_SHORT).show();
                 holder.min.setVisibility(View.GONE);
                 holder.sign=0;
                 dialog.dismiss();

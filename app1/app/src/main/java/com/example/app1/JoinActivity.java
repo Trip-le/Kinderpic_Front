@@ -1,8 +1,14 @@
 package com.example.app1;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -13,6 +19,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
+import java.io.InputStream;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -31,6 +40,7 @@ public class JoinActivity extends AppCompatActivity {
     private EditText name;
     private RadioGroup gen;
     private Button join;
+    private ImageView pro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +59,17 @@ public class JoinActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         gen = findViewById(R.id.gen);
 
-        ImageView pro=findViewById(R.id.profile);
+        pro=findViewById(R.id.profile);
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getApplicationContext(),"프로필 사진 등록", Toast.LENGTH_SHORT);
                 myToast.show();
+
+                Intent intent=new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 0);
             }
         });
 
@@ -116,6 +131,43 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    //키보드 내리기
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        hideKeyboard();
+        return super.dispatchTouchEvent(ev);
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    //프로필 사진 등록
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    Uri uri=data.getData();
+                    Glide.with(getApplicationContext()).load(uri).into(pro);
+
+                } catch (Exception e) {
+
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
 }
