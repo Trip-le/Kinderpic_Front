@@ -73,6 +73,7 @@
                     android:textColor="#1C1C1C"
                     android:textSize="20dp" />
                 <TextView
+                    android:id="@+id/frag3_email"
                     android:layout_marginTop="1dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

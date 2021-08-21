@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -12,11 +13,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -33,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.114.1:3000";
+    private String BASE_URL = "http://192.168.35.105:3000";
     private EditText email;
     private EditText pass;
     private EditText passCheck;
@@ -41,6 +44,11 @@ public class JoinActivity extends AppCompatActivity {
     private RadioGroup gen;
     private Button join;
     private ImageView pro;
+    private RadioButton teacher;
+    private RadioButton parent;
+    private LinearLayout email_check_Li;
+    private EditText email_check;
+    private Button email_check_Button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +82,55 @@ public class JoinActivity extends AppCompatActivity {
         });
 
         Button auth=findViewById(R.id.auth);
+        email_check_Li=findViewById(R.id.email_check_Li);
+        email_check=findViewById(R.id.email_check);
+        email_check_Button=findViewById(R.id.email_check_button);
+
         auth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast myToast = Toast.makeText(getApplicationContext(),email.getText()+"로 인증메일이 발송되었습니다.", Toast.LENGTH_SHORT);
-                myToast.show();
                 // 인증메일 보내기
+                email_check_Li.setVisibility(View.VISIBLE);
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("email", email.getText().toString());
+
+
+                Call<CheckResult> call = retrofitInterface.executeCheck(map);
+
+
+                call.enqueue(new Callback<CheckResult>() {
+                    @Override
+                    public void onResponse(Call<CheckResult> call, Response<CheckResult> response) {
+                        if (response.code() == 200) {
+                            CheckResult result = response.body();
+
+                            email_check_Button.setOnClickListener(new View.OnClickListener(){
+                                public void onClick(View view){
+                                    if(result.getChecking()==email_check.getText().toString()) {
+                                        Toast.makeText(JoinActivity.this, "인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                        email_check_Button.setText("인증 완료");
+                                    }
+                                    else{
+                                        Toast.makeText(JoinActivity.this, "인증번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+                                    }
+
+                                }
+                            });
+                        }
+                        else if(response.code() == 404){
+                            Toast.makeText(JoinActivity.this, "404 오류", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CheckResult> call, Throwable t) {
+                        Toast.makeText(JoinActivity.this, t.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
             }
         });
 
@@ -92,6 +143,8 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+        teacher = findViewById(R.id.teacher);
+        parent = findViewById(R.id.parent);
         join = findViewById(R.id.join);
         join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +157,13 @@ public class JoinActivity extends AppCompatActivity {
                     map.put("email", email.getText().toString());
                     map.put("password", pass.getText().toString());
                     map.put("name", name.getText().toString());
+                    if(teacher.isChecked()){
+                        map.put("job", "선생님");
+                    }
+                    else{
+                        map.put("job", "학부모");
+                    }
+
 
                     Call<Void> call = retrofitInterface.executeSignup(map);
 
@@ -111,10 +171,16 @@ public class JoinActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.code() == 200) {
-                                Toast.makeText(JoinActivity.this,
-                                        "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent);
+                                if(email_check_Button.getText().toString()=="인증 완료"){
+                                    Toast.makeText(JoinActivity.this,
+                                            "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(JoinActivity.this,
+                                            "이메일 인증이 완료되지 않았습니다다.", Toast.LENGTH_LONG).show();
+                                }
                             } else if (response.code() == 400) {
                                 Toast.makeText(JoinActivity.this, "이미 가입된 정보입니다.",
                                         Toast.LENGTH_LONG).show();

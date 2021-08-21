@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.114.1:3000";
+    private String BASE_URL = "http://192.168.35.105:3000";
     private EditText logid;
     private EditText logpass;
     private Button login;
@@ -88,8 +88,9 @@ public class LoginActivity extends AppCompatActivity {
         map.put("password", logpass.getText().toString());
 
         Call<LoginResult> call = retrofitInterface.executeLogin(map);
-        changeMain();
-        /*
+
+
+
         call.enqueue(new Callback<LoginResult>() {
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, t.getMessage(),
                         Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
     }
 
     //키보드 내리기
