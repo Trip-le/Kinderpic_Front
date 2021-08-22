@@ -74,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void changeMain() { //메인으로
         Intent intent = new Intent(this, MainActivity.class);
+        //액티비티 스택제거
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
