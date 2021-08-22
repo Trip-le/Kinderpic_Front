@@ -13,100 +13,140 @@
         android:textSize="30dp"
         android:background="#FFEA9F"
         android:layout_marginBottom="20dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_weight="8"
-        android:layout_marginTop="40dp">
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/profile"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/profile"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            />
+            android:src="@drawable/profile" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/email"
                 android:layout_width="260dp"
-                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:hint="이메일"
-                android:textColor="@color/black"/>
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
             <Button
                 android:id="@+id/auth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#DD3F47"
                 android:text="인증하기"
-                android:textColor="#FFFCEF"
-                android:backgroundTint="#DD3F47"/>
+                android:textColor="#FFFCEF" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/email_check_Li"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/email_check"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:hint="인증번호"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/email_check_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#DD3F47"
+                android:text="확인하기"
+                android:textColor="#FFFCEF" />
+        </LinearLayout>
+
         <EditText
             android:id="@+id/pass"
-            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:hint="비밀번호"
             android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"/>
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
         <EditText
             android:id="@+id/passCheck"
-            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
             android:hint="비밀번호 확인"
             android:inputType="textPassword"
-            android:textColor="@color/black"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"/>
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
         <EditText
             android:id="@+id/name"
-            android:singleLine="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름"
-            android:textColor="@color/black"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"/>
+            android:hint="이름"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp">
+            android:orientation="horizontal">
+
             <RadioGroup
                 android:id="@+id/gen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="선생님"/>
+                    android:text="선생님" />
+
                 <RadioButton
-                    android:id="@+id/student"
+                    android:id="@+id/parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="학생"/>
+                    android:text="학부모" />
             </RadioGroup>
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

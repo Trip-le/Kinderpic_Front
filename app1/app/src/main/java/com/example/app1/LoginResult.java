@@ -4,7 +4,8 @@ public class LoginResult {
     private String name;
     private String email;
     private String password;
-    private String birth;
+    private String job;
+    private String Checking;//인증번호
 
     public String getName() {
         return name;
@@ -16,5 +17,7 @@ public class LoginResult {
 
     public String getPassword() { return password; }
 
-    public String getBirth() { return birth; }
+    public String getJob() { return job; }
+
+    public String getChecking() { return Checking; }
 }
