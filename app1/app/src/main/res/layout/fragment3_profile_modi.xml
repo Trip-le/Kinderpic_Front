@@ -147,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:text="성명"/>
             <TextView
+                android:id="@+id/name_prm_tv"
                 android:layout_marginLeft="30dp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -164,6 +165,7 @@
                 android:layout_height="wrap_content"
                 android:text="아이디"/>
             <TextView
+                android:id="@+id/email_prm_tv"
                 android:layout_marginLeft="17dp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
@@ -227,14 +229,14 @@
         android:layout_width="60dp"
         android:layout_height="26dp"
         android:background="@drawable/logout_no">
-    <TextView
-        android:layout_marginLeft="18dp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="13dp"
-        android:text="확인"
-        android:textColor="@color/black"/>
+        <TextView
+            android:layout_marginLeft="18dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:text="확인"
+            android:textColor="@color/black"/>
     </LinearLayout>
     <TextView
         android:visibility="invisible"

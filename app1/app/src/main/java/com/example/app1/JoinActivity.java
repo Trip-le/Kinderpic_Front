@@ -1,12 +1,15 @@
 package com.example.app1;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,14 +27,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.app1.MainActivity.p_email;
+import static com.example.app1.MainActivity.p_name;
 
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
@@ -140,6 +150,10 @@ public class JoinActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getApplicationContext(),"사진 등록", Toast.LENGTH_SHORT);
                 myToast.show();
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
             }
         });
 
@@ -221,17 +235,50 @@ public class JoinActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 0) {
+        if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
+                ClipData clipData = data.getClipData();
+                Uri fileUri = data.getData();
+
+
+
+                ContentResolver resolver = this.getContentResolver();
                 try {
-                    Uri uri=data.getData();
-                    Glide.with(getApplicationContext()).load(uri).into(pro);
+                    InputStream instream = resolver.openInputStream(fileUri);
+                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    imgBitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+                    MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("postImg", p_name+".jpg" ,requestBody);
+                    //imageView.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                    instream.close();   // 스트림 닫아주기
+                    //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
+
+                    Call<ImageResult> call = retrofitInterface.Image(email.getText().toString(), uploadFile);
+
+
+
+                    call.enqueue(new Callback<ImageResult>() {
+                        @Override
+                        public void onResponse(Call<ImageResult> call, Response<ImageResult> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(JoinActivity.this, "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(response.code() == 404){
+                                Toast.makeText(JoinActivity.this, "404 오류", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ImageResult> call, Throwable t) {
+                            Toast.makeText(JoinActivity.this, t.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
 
                 } catch (Exception e) {
-
+                    Toast.makeText(JoinActivity.this, "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
     }

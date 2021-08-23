@@ -1,11 +1,20 @@
 package com.example.app1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 
 public interface RetrofitInterface {
 
@@ -20,5 +29,11 @@ public interface RetrofitInterface {
 
     @POST("/check") //이메일 보내기 (인증번호용)
     Call<CheckResult> executeCheck (@Body HashMap<String, String> map);
+
+    // 프로필 이미지 보내기
+    @Multipart
+    @POST("/groupimage")
+    Call<ImageResult> Image(String map, @Body MultipartBody.Part postImg);
+
 
 }

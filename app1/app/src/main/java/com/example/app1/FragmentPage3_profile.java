@@ -37,6 +37,8 @@ public class FragmentPage3_profile extends Fragment {
     TextView leave;
     ImageButton back;
     TextView frag3_email;
+    TextView email;
+    TextView name;
 
     @Nullable
     @Override
@@ -48,6 +50,12 @@ public class FragmentPage3_profile extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        email = view.findViewById(R.id.email_pr_tv);
+        name = view.findViewById(R.id.name_pr_tv);
+
+        email.setText(MainActivity.p_email);
+        name.setText(MainActivity.p_name);
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -121,12 +129,10 @@ public class FragmentPage3_profile extends Fragment {
                 HashMap<String, String> map = new HashMap<>();
 
                 //*아이디랑 비밀번호 들고와서 탈퇴할 때 보내기 -고은
-                /*
-                map.put("email", logid.getText().toString());
-                map.put("password", logpass.getText().toString());11
-*/
-                Call<LoginResult> call = retrofitInterface.executeLeave(map);
+                map.put("email", MainActivity.p_email);
+                map.put("password", MainActivity.p_password);
 
+                Call<LoginResult> call = retrofitInterface.executeLeave(map);
 
                 call.enqueue(new Callback<LoginResult>() {
                     @Override

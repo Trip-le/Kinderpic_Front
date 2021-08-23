@@ -31,6 +31,8 @@ public class FragmentPage3_profile_modi extends Fragment {
     EditText new_pw2;
     LinearLayout pw_modi;
     ImageButton back;
+    TextView email;
+    TextView name;
 
     @Nullable
     @Override
@@ -42,6 +44,13 @@ public class FragmentPage3_profile_modi extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        email = view.findViewById(R.id.email_prm_tv);
+        name = view.findViewById(R.id.name_prm_tv);
+
+        email.setText(MainActivity.p_email);
+        name.setText(MainActivity.p_name);
+
 
         back=view.findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

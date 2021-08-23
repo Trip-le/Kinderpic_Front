@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="박고은"
@@ -65,21 +66,28 @@
                     android:textColor="#1C1C1C"
                     android:textSize="20dp" />
                 <TextView
+                    android:id="@+id/email_tv"
                     android:layout_marginTop="1dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="goeun12@gmail.com"
                     android:textSize="20dp" />
             </LinearLayout>
-            <ImageView
-                android:id="@+id/profile_next"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_next"/>
         </LinearLayout>
     </LinearLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="350dp"
+        android:layout_marginTop="120dp">
+        <ImageView
+            android:id="@+id/profile_next"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_next"/>
+    </FrameLayout>
     <LinearLayout
         android:layout_marginTop="195dp"
         android:layout_width="match_parent"

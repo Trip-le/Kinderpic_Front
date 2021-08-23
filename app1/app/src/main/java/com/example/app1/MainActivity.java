@@ -2,6 +2,7 @@ package com.example.app1;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -31,11 +32,22 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     String tag1, tag2, tag3;
     private long backKeyPressedTime = 0;
+    public static String p_email;
+    public static String p_password;
+    public static String p_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+
+        p_email = bundle.getString("email");
+        p_name = bundle.getString("name");
+        p_password = bundle.getString("password");
 
         mBottomNV = findViewById(R.id.nav_view);
         mBottomNV.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() { //NavigationItemSelecte
@@ -85,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
-        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -142,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
-        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -174,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
-        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -327,13 +336,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //백스택 제거
-    private void clearBackStack() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        while (fragmentManager.getBackStackEntryCount() != 0) {
-            fragmentManager.popBackStackImmediate();
-        }
-    }
 
     //프래그먼트 트랜젝션 삭제
     public void remove(String tag){

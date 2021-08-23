@@ -28,6 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button join;
     private TextView find;
+    private String intent_email;
+    private String intent_password;
+    private String intent_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void changeMain() { //메인으로
         Intent intent = new Intent(this, MainActivity.class);
-        //액티비티 스택제거
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("email", intent_email);
+        bundle.putString("password", intent_password);
+        bundle.putString("name", intent_name);
+        intent.putExtras(bundle);
+
         startActivity(intent);
     }
 
@@ -85,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // HashMap에 로그인 정보 저장
         HashMap<String, String> map = new HashMap<>();
+
 
         map.put("email", logid.getText().toString());
         map.put("password", logpass.getText().toString());
@@ -100,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                     LoginResult result = response.body();
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(LoginActivity.this);
+
+                    intent_email = result.getEmail();
+                    intent_password = result.getPassword();
+                    intent_name = result.getName();
+
                     builder1.setTitle(result.getName());
                     builder1.setMessage(result.getEmail());
                     builder1.show();

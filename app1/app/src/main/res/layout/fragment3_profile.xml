@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/name_pr_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="성명1"
@@ -73,7 +74,7 @@
                     android:textColor="#1C1C1C"
                     android:textSize="20dp" />
                 <TextView
-                    android:id="@+id/frag3_email"
+                    android:id="@+id/email_pr_tv"
                     android:layout_marginTop="1dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

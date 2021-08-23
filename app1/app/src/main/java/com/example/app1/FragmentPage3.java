@@ -27,6 +27,8 @@ public class FragmentPage3 extends Fragment {
     ImageView service;
     ImageView personal_info;
     ImageView mannual;
+    TextView email;
+    TextView name;
 
     @Nullable
     @Override
@@ -38,6 +40,13 @@ public class FragmentPage3 extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        email = view.findViewById(R.id.email_tv);
+        name = view.findViewById(R.id.name_tv);
+
+        email.setText(MainActivity.p_email);
+        name.setText(MainActivity.p_name);
+
 
         profile_next = view.findViewById(R.id.profile_next);
         profile_next.setOnClickListener(new View.OnClickListener(){
