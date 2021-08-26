@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:text="그룹명"
             android:textColor="@color/black"
-            android:layout_margin="15dp"
+            android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:textSize="50dp"/>
+            android:textSize="40dp"/>
 
     </FrameLayout>
     <FrameLayout

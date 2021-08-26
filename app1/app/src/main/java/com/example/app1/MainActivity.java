@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -184,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -336,6 +339,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //백스택 제거
+    private void clearBackStack() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        while (fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStackImmediate();
+        }
+    }
 
     //프래그먼트 트랜젝션 삭제
     public void remove(String tag){
