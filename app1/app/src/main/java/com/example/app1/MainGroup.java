@@ -201,7 +201,7 @@ public class MainGroup extends Fragment {
                     //imageView.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
                     //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
-
+/*
                     Call<ImageResult> call = retrofitInterface.Image(p_email, uploadFile);
 
 
@@ -222,7 +222,7 @@ public class MainGroup extends Fragment {
                             Toast.makeText(getContext(), t.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                    });
+                    });*/
 
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();

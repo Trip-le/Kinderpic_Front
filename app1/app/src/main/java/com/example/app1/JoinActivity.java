@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +30,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import okhttp3.MediaType;
@@ -77,6 +79,7 @@ public class JoinActivity extends AppCompatActivity {
         name = findViewById(R.id.name);
         gen = findViewById(R.id.gen);
 
+
         pro=findViewById(R.id.profile);
         pro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +87,7 @@ public class JoinActivity extends AppCompatActivity {
                 Toast myToast = Toast.makeText(getApplicationContext(),"프로필 사진 등록", Toast.LENGTH_SHORT);
                 myToast.show();
 
-                Intent intent=new Intent(Intent.ACTION_PICK);
+                Intent intent=new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, 0);
@@ -117,7 +120,7 @@ public class JoinActivity extends AppCompatActivity {
 
                             email_check_Button.setOnClickListener(new View.OnClickListener(){
                                 public void onClick(View view){
-                                    if(result.getChecking()==email_check.getText().toString()) {
+                                    if((result.getChecking()).equals(email_check.getText().toString())) {
                                         Toast.makeText(JoinActivity.this, "인증이 완료되었습니다.", Toast.LENGTH_LONG).show();
                                         email_check_Button.setText("인증 완료");
                                     }
@@ -148,12 +151,7 @@ public class JoinActivity extends AppCompatActivity {
         putimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast myToast = Toast.makeText(getApplicationContext(),"사진 등록", Toast.LENGTH_SHORT);
-                myToast.show();
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+                toGalery();
             }
         });
 
@@ -180,37 +178,46 @@ public class JoinActivity extends AppCompatActivity {
 
 
                     Call<Void> call = retrofitInterface.executeSignup(map);
-
-                    call.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            if (response.code() == 200) {
-                                if(email_check_Button.getText().toString()=="인증 완료"){
+                    if(email_check_Button.getText().toString()=="인증 완료"){
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                if (response.code() == 200) {
                                     Toast.makeText(JoinActivity.this,
                                             "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
+
+                                } else if (response.code() == 400) {
+                                    Toast.makeText(JoinActivity.this, "이미 가입된 정보입니다.",
+                                            Toast.LENGTH_LONG).show();
                                 }
-                                else{
-                                    Toast.makeText(JoinActivity.this,
-                                            "이메일 인증이 완료되지 않았습니다다.", Toast.LENGTH_LONG).show();
-                                }
-                            } else if (response.code() == 400) {
-                                Toast.makeText(JoinActivity.this, "이미 가입된 정보입니다.",
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(JoinActivity.this, t.getMessage(),
                                         Toast.LENGTH_LONG).show();
                             }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Toast.makeText(JoinActivity.this, t.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+                        });
+                    }
+                    else{
+                        Toast.makeText(JoinActivity.this,
+                                "이메일 인증이 완료되지 않았습니다.", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
 
+    }
+
+    private void toGalery(){
+        Toast myToast = Toast.makeText(getApplicationContext(),"사진 등록", Toast.LENGTH_SHORT);
+        myToast.show();
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setType("image/*");
+        startActivityForResult(intent, 101);
     }
 
     //키보드 내리기
@@ -231,31 +238,62 @@ public class JoinActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    //프로필 사진 등록
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
-                ClipData clipData = data.getClipData();
+                //ClipData clipData = data.getClipData();
                 Uri fileUri = data.getData();
-
-
-
+                ClipData clipData = data.getClipData();
+                ArrayList<Uri> filePathList = new ArrayList<>();
+                /*
+                while(clipData.getItemCount()<6) {
+                    Toast myToast = Toast.makeText(getApplicationContext(),"5장 이상 선택해주세요", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    toGalery();
+                }*/
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Uri tempUri;
+                    tempUri = clipData.getItemAt(i).getUri();
+                    Log.i("temp: ", i + " " + tempUri.toString());
+                    filePathList.add(tempUri);
+                }
                 ContentResolver resolver = this.getContentResolver();
                 try {
+                    /*
                     InputStream instream = resolver.openInputStream(fileUri);
                     Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     imgBitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
-                    RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), byteArrayOutputStream.toByteArray());
                     MultipartBody.Part uploadFile = MultipartBody.Part.createFormData("postImg", p_name+".jpg" ,requestBody);
                     //imageView.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
-                    //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
+                    //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장*/
 
-                    Call<ImageResult> call = retrofitInterface.Image(email.getText().toString(), uploadFile);
+                    ArrayList<MultipartBody.Part> files = new ArrayList<>();
 
+
+                    // 파일 경로들을 가지고있는 `ArrayList<Uri> filePathList`가 있다고 칩시다...
+                    for (int i = 0; i < filePathList.size(); ++i) {
+                        // Uri 타입의 파일경로를 가지는 RequestBody 객체 생성
+                        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(filePathList.get(i)));
+
+                        // 사진 파일 이름
+                        String fileName = "photo" + i + ".jpg";
+                        // RequestBody로 Multipart.Part 객체 생성
+
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("photo", fileName, fileBody);
+                        Log.i("fileName", filePart.toString());
+                        // 추가
+                        files.add(filePart);
+                    }
+
+                    Call<ImageResult> call = retrofitInterface.Image(email.getText().toString(), files);
 
 
                     call.enqueue(new Callback<ImageResult>() {
@@ -275,12 +313,24 @@ public class JoinActivity extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                         }
                     });
-
                 } catch (Exception e) {
                     Toast.makeText(JoinActivity.this, "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-    }
+        else if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    Uri uri=data.getData();
+                    Glide.with(getApplicationContext()).load(uri).into(pro);
 
+                } catch (Exception e) {
+
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }
+

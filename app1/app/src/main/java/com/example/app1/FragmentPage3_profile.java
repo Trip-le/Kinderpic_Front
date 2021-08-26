@@ -132,6 +132,7 @@ public class FragmentPage3_profile extends Fragment {
                 map.put("email", MainActivity.p_email);
                 map.put("password", MainActivity.p_password);
 
+
                 Call<LoginResult> call = retrofitInterface.executeLeave(map);
 
                 call.enqueue(new Callback<LoginResult>() {
@@ -151,7 +152,6 @@ public class FragmentPage3_profile extends Fragment {
                         Toast.makeText(getView().getContext(), t.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
-
                 });
             }
         });
