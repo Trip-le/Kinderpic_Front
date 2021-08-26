@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:text="킨더픽"
             android:textColor="@color/black"
-            android:layout_margin="5dp"
+            android:layout_margin="15dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/permanentmarkerregular"
+            android:fontFamily="@font/maplestorybold"
             android:textSize="50dp"/>
 
     </FrameLayout>
