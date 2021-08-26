@@ -57,14 +57,6 @@
         android:layout_weight="10"
         android:layout_gravity="center">
 
-        <ImageView
-            android:layout_width="380dp"
-            android:layout_height="270dp"
-            android:src="@drawable/plain3"
-            android:layout_gravity="right|bottom"
-            android:layout_margin="10dp"
-            android:foreground="#BFFFFCEF"/>
-        >
 
         <LinearLayout
             android:background="@drawable/f_box"
