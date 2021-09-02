@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AddGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.104:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     String Gname;
     String Gday;
     String Gplace;
@@ -68,18 +68,18 @@ public class AddGroup extends Fragment {
                     myToast.show();
                 }else {
 
-                    Call<GroupId> call = retrofitInterface.groupId();
+                    Call<String> call = retrofitInterface.groupId();
 
-                    call.enqueue(new Callback<GroupId>() {
+                    call.enqueue(new Callback<String>() {
                         @Override
-                        public void onResponse(Call<GroupId> call, Response<GroupId> response) {
-                            if (response.code() == 200) {
-                                GroupId groupId=response.body();
-                                F.setTextSize(Dimension.DP, 100);
-                                F.setTextColor(Color.parseColor("#980000"));
-                                F.setText(groupId.getId());
-                                create=1;
-                                Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if (response.code() == 200) {
+                                        String groupId=response.body();
+                                        F.setTextSize(Dimension.DP, 100);
+                                        F.setTextColor(Color.parseColor("#980000"));
+                                        F.setText(groupId);
+                                        create=1;
+                                        Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
                                 myToast.show();
 
                             } else if (response.code() == 400) {
@@ -88,12 +88,12 @@ public class AddGroup extends Fragment {
                         }
 
                         @Override
-                        public void onFailure(Call<GroupId> call, Throwable t) {
+                        public void onFailure(Call<String> call, Throwable t) {
                             Toast.makeText(getView().getContext(), t.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
                     });
-                    
+
                 }
             }
         });

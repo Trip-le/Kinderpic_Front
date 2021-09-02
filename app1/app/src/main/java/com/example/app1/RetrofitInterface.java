@@ -15,6 +15,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitInterface {
 
@@ -36,7 +38,7 @@ public interface RetrofitInterface {
     Call<ImageResult> Image(@Header("Token") String map, @Part List<MultipartBody.Part> Imgs);
 
     @GET("/groupid")
-    Call<GroupId> groupId();
+    Call<String> groupId();
 
 
 }
