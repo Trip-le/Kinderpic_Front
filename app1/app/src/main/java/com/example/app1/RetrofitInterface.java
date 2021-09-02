@@ -1,5 +1,6 @@
 package com.example.app1;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,5 +41,9 @@ public interface RetrofitInterface {
     @GET("/groupid")
     Call<String> groupId();
 
+    @POST("/add_group")
+    Call<String> addGroup(@Body HashMap<String,String>map);
 
+    @POST("/home")
+    Call<String[]> getgroup(@Body HashMap<String,String> map);
 }

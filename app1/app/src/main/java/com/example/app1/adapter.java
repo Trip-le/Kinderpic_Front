@@ -13,15 +13,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
-    public static ArrayList<group> items=new ArrayList<>();
+    public String[] items;
     private Dialog dialog;
     private Context context;
+
+    public adapter(Context context, String[] items){
+        this.context=context;
+        this.items=items;
+    }
+
     @Override
     public int getItemCount() {
-        return items.size();
+        return items.length;
     }
 
     @NonNull
@@ -36,7 +45,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        group item = items.get(position);
+        String item = items[position];
         holder.setItem(item);
         holder.min.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +64,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
         private ImageView iv;
         private ImageView min;
         private int sign=0;
-        group Data;
+        String Data;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -68,7 +77,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
                 @Override
                 public void onClick(View v){
                     MainActivity activity = (MainActivity)_ctx;
-                    activity.MainGroup(Data.getName());
+                    activity.MainGroup(Data);
                 }
             });
 
@@ -89,25 +98,27 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
 
         }
 
-        void setItem(group data){
+        void setItem(String data){
             Data=data;
-            tv.setText(data.getName());
+            tv.setText(data);
         }
 
     }
 
-    public void showDialog(group item, int position, ViewHolder holder){
+    public void showDialog(String item, int position, ViewHolder holder){
         dialog.show(); // 다이얼로그 띄우기
         TextView cen=dialog.findViewById(R.id.cen);
         TextView clear=dialog.findViewById(R.id.clear);
         TextView tv=dialog.findViewById(R.id.Text);
-        tv.setText(holder.Data.getName()+" "+tv.getText());
+        tv.setText(item+" "+tv.getText());
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"삭제하였습니다.",Toast.LENGTH_SHORT).show();
-                items.remove(position);
+                List<String> list= new ArrayList(Arrays.asList(items));
+                list.remove(position);
+                items= list.toArray(new String[0]);
                 notifyItemRemoved(position);
                 notifyDataSetChanged();
                 holder.min.setVisibility(View.GONE);
