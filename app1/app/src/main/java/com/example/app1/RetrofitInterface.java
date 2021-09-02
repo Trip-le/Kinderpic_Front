@@ -35,5 +35,8 @@ public interface RetrofitInterface {
     @POST("/groupimage")
     Call<ImageResult> Image(@Header("Token") String map, @Part List<MultipartBody.Part> Imgs);
 
+    @GET("/groupid")
+    Call<GroupId> groupId();
+
 
 }

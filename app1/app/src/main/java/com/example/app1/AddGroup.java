@@ -1,11 +1,7 @@
 package com.example.app1;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddGroup extends Fragment {
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://192.168.219.104:3000";
     String Gname;
     String Gday;
     String Gplace;
@@ -42,6 +43,13 @@ public class AddGroup extends Fragment {
         EditText P = (EditText) v.findViewById(R.id.GPlace);
         EditText M = (EditText) v.findViewById(R.id.MyName);
 
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
         Button FaddB = (Button) v.findViewById(R.id.FaddB);
         FaddB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +67,33 @@ public class AddGroup extends Fragment {
                     Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"학급명을 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                 }else {
-                    Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
-                    myToast.show();
-                    F.setTextSize(Dimension.DP, 100);
-                    F.setTextColor(Color.parseColor("#980000"));
-                    F.setText("ABCDEF");//그룹 아이디 생성해야함
-                    //올바르게 생성하였을 때
-                    create=1;
+
+                    Call<GroupId> call = retrofitInterface.groupId();
+
+                    call.enqueue(new Callback<GroupId>() {
+                        @Override
+                        public void onResponse(Call<GroupId> call, Response<GroupId> response) {
+                            if (response.code() == 200) {
+                                GroupId groupId=response.body();
+                                F.setTextSize(Dimension.DP, 100);
+                                F.setTextColor(Color.parseColor("#980000"));
+                                F.setText(groupId.getId());
+                                create=1;
+                                Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
+                                myToast.show();
+
+                            } else if (response.code() == 400) {
+                                Toast.makeText(getView().getContext(), "404 오류", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<GroupId> call, Throwable t) {
+                            Toast.makeText(getView().getContext(), t.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    
                 }
             }
         });
