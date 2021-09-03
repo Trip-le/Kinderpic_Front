@@ -46,4 +46,7 @@ public interface RetrofitInterface {
 
     @POST("/home")
     Call<String[]> getgroup(@Body HashMap<String,String> map);
+
+    @POST("/group")
+    Call<groupResult> showGroup(@Body HashMap<String,String> map);
 }
