@@ -65,8 +65,8 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
             this._ctx=context;
-            tv=itemView.findViewById(R.id.group_ID);
-            iv=itemView.findViewById(R.id.imv1);
+            tv=itemView.findViewById(R.id.group_Na);
+            iv=itemView.findViewById(R.id.group_Code);
 
             /*
             itemView.setOnClickListener(new View.OnClickListener(){
@@ -82,12 +82,10 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
             });*/
 
         }
-
         void setItem(fgroup data){
             Data=data;
-            tv.setText(data.getName());
             iv.setText(data.getCode());
-
+            tv.setText(data.getName());
         }
 
     }

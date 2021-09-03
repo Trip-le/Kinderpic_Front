@@ -38,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentPage2 extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://192.168.219.108:3000";
     private GridLayoutManager GridLayoutManager;
     private adapter Gadapter;
     @Nullable
@@ -88,7 +88,7 @@ public class FragmentPage2 extends Fragment {
                 Toast.makeText(getContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
                 if (response.code() == 200) {
                     String[] a=response.body();
-                    Log.d("체크",a[0]);
+                    //Log.d("체크",a[0]);
 
                     RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
                     GridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);

@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://192.168.219.108:3000";
     private EditText logid;
     private EditText logpass;
     private Button login;

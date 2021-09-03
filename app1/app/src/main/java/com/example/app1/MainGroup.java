@@ -51,7 +51,7 @@ import static com.example.app1.MainActivity.p_name;
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://192.168.219.108:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     Dialog Dinfo;
