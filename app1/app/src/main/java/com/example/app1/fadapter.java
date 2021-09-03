@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
-    public static ArrayList<group> items=new ArrayList<>();
+    public static ArrayList<fgroup> items=new ArrayList<>();
     private Dialog dialog;
     private Context context;
 
@@ -40,7 +40,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        group item = items.get(position);
+        fgroup item = items.get(position);
         holder.setItem(item);
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +56,8 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         Context _ctx;
         private TextView tv;
-        private ImageView iv;
-        group Data;
+        private TextView iv;
+        fgroup Data;
 
 
 
@@ -83,13 +83,15 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
 
         }
 
-        void setItem(group data){
+        void setItem(fgroup data){
             Data=data;
             tv.setText(data.getName());
+            iv.setText(data.getCode());
+
         }
 
     }
-    public void showDialog2(group item, int position, fadapter.ViewHolder holder){
+    public void showDialog2(fgroup item, int position, fadapter.ViewHolder holder){
         dialog.show(); // 다이얼로그 띄우기
         /*
         TextView cen=dialog.findViewById(R.id.cen);
@@ -105,7 +107,9 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context,"취소했습니다.",Toast.LENGTH_SHORT).show();
+
                 dialog.dismiss();
+
             }
         });
 

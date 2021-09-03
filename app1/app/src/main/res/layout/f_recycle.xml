@@ -3,18 +3,22 @@
 android:orientation="horizontal" android:layout_width="match_parent"
 android:layout_height="wrap_content"
     android:background="#FFFCEF">
-    <ImageView
-        android:id="@+id/imv1"
-        android:layout_margin="15dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ic_user"/>
 
+    <TextView
+        android:id="@+id/imv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group Name"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:paddingRight="30dp"
+        />
     <TextView
         android:id="@+id/group_ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USER ID"
+        android:text="Group Code"
         android:textSize="20dp"
         android:textColor="@color/black"
         android:layout_gravity="center"

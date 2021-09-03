@@ -34,9 +34,9 @@ public class FragmentPage1 extends Fragment {
         recyclerView.setLayoutManager(LinearLayoutManager);
         Fadapter= new fadapter();
         Fadapter.items.clear();
-        fadapter.items.add(new group("4DAw456daD",""));
-        fadapter.items.add(new group("48as6D2156",""));
-        fadapter.items.add(new group("ad2dADDA65",""));
+        fadapter.items.add(new fgroup("그룹이름1","코드1", ""));
+        fadapter.items.add(new fgroup("그룹이름2","코드2", ""));
+        fadapter.items.add(new fgroup("그룹이름3","코드3", ""));
         recyclerView.setAdapter(Fadapter);
 
 
