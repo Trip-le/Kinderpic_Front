@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import retrofit2.Retrofit;
+
 public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
     public static ArrayList<fgroup> items=new ArrayList<>();
     private Dialog dialog;

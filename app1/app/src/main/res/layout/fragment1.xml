@@ -28,23 +28,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center"
         android:background="#FFEA9F"
         android:layout_margin="30dp"
         >
-        <ImageView
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_width="50dp"
+
+        <ImageButton
+            android:id="@+id/seach_ID"
+            android:layout_width="30dp"
             android:layout_height="50dp"
-            android:src="@drawable/search"
-            android:layout_gravity="center|left"
-            android:background="#FFEA9F"/>
+            android:background="#00000000"
+            android:src="@drawable/zoom2"
+            android:layout_marginRight="10dp"/>
 
         <EditText
+            android:id="@+id/seach_ID_text"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-
             android:layout_marginBottom="20dp"
             android:background="#FFEA9F"
             android:hint="그룹 아이디 검색" />

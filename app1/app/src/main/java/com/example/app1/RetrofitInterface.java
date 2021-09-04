@@ -49,4 +49,8 @@ public interface RetrofitInterface {
 
     @POST("/group")
     Call<groupResult> showGroup(@Body HashMap<String,String> map);
+
+    //그룹 검색
+    @POST("/search_group")
+    Call<String> searchGroup(@Body String string);
 }
