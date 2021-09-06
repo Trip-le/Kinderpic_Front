@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AddGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.107:3000";
+    private String BASE_URL = "http://192.168.219.101:3000";
     String Gname;
     String Gday;
     String Gplace;

@@ -48,7 +48,7 @@ import static com.example.app1.MainActivity.p_name;
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.107:3000";
+    private String BASE_URL = "http://192.168.219.101:3000";
     private EditText email;
     private EditText pass;
     private EditText passCheck;

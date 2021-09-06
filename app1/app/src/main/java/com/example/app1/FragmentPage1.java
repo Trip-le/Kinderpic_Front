@@ -1,9 +1,13 @@
 package com.example.app1;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,10 +41,17 @@ public class FragmentPage1 extends Fragment {
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.107:3000";
+    private String BASE_URL = "http://192.168.219.101:3000";
     private EditText seid;
-    private String seidT;
+    private String searchid;
     private View v;
+    //서버에서 받아오기
+    public String g_name;
+
+    private RecyclerView recyclerView;
+    //다이얼로그 띄우기
+    private Dialog dialog;
+    private fadapter ffadapter;
 
     @Nullable
 
@@ -70,51 +81,76 @@ public class FragmentPage1 extends Fragment {
                 handlesearch();
             }
         });
-
-
         // 리사이클
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView1);
+        recyclerView = v.findViewById(R.id.recyclerView1);
         LinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(LinearLayoutManager);
         Fadapter= new fadapter();
-        Fadapter.items.clear();
-        //리사이클 보이나 임의의 그룹 추가
-        fadapter.items.add(new fgroup("그룹이름1","코드1", ""));
-        //fadapter.items.add(new fgroup("그룹이름2","코드2", ""));
-        //fadapter.items.add(new fgroup("그룹이름3","코드3", ""));
+
+        //리사이클 확인 용
+        fadapter.items.add(new fgroup("무지","감자",""));
         recyclerView.setAdapter(Fadapter);
 
         return v;
     }
 
     private void handlesearch() {
+
         seid = v.findViewById(R.id.seach_ID_text); // id 입력 텍스트 가져오기
         if (seid.getText().toString().length() == 0) {//공백일 때 처리할 내용
             Toast.makeText(getView().getContext(), "검색할 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
         } else { //공백이 아닐 때 처리할 내용
-            seidT = seid.getText().toString();
-            Toast.makeText(getActivity(), seidT, Toast.LENGTH_LONG).show();
-            Call<String> call = retrofitInterface.searchGroup(seidT);
+            searchid = (seid.getText()).toString();
+                    //(아래)값 제대로 들어가나 확인 용
+            Toast.makeText(getActivity(), searchid, Toast.LENGTH_LONG).show();
+
+            HashMap<String, String> map1 = new HashMap<>();
+            map1.put("searchid", searchid);
+
+            Call<String> call = retrofitInterface.searchGroup(map1);
 
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    //(아래)값 제대로 들어가나 확인 용
-                    //Toast.makeText(getContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
                     if (response.code() == 200) {
-                        seidT = response.body();
+                        //리사이클 초기화
+                        Fadapter.items.clear();
+                        //서버에서 그룹 이름 값 가져오기
+                        g_name = response.body();
+                        setname(g_name);
+                        ffadapter= new fadapter(getContext(), response.body());
+                        makeRe();
+                        Toast.makeText(getActivity(), "일치합니다.", Toast.LENGTH_LONG).show();
+
+                    }
+                    else if(response.code()==400){
+                        //일치하는 항목이 없음
+                        //다이얼로그 일치하는 항목 없슴다~
+
+                        //showDialog2(item, position, holder);
+                        Toast.makeText(getActivity(), "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
                     }
                     else if(response.code() == 404){
                         Toast.makeText(getActivity(), "404 오류", Toast.LENGTH_LONG).show();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
-
                 }
             });
         }
+    }
+
+    private void makeRe() {
+        //***함수로 가져오기
+        fadapter.items.add(new fgroup(g_name,searchid,""));
+        recyclerView.setAdapter(Fadapter);
+    }
+
+    public void setname(String a){ this.g_name= a;}
+
+    public String getgname(){
+       return g_name;
     }
 
 
