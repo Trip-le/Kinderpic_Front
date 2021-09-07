@@ -394,4 +394,14 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    //프래그먼트 새로고침
+    public void reflash(){
+        Fragment frg = null;
+        frg = getSupportFragmentManager().findFragmentByTag(tag1);
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
+    }
+
 }

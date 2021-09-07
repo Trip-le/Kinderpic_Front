@@ -55,6 +55,6 @@ public interface RetrofitInterface {
     Call<String> searchGroup(@Body HashMap<String,String>map);
 
     @POST("/add_search_group")
-    Call<searchResult> addSearchGroup(@Body HashMap<String,String>map);
+    Call<Void> addSearchGroup(@Body HashMap<String,String>map);
 
 }

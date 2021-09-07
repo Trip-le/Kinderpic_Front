@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,13 +37,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class FragmentPage1 extends Fragment {
-    private fadapter Fadapter;
     private LinearLayoutManager LinearLayoutManager;
 
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.101:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     private EditText seid;
     private String searchid;
     private View v;
@@ -78,80 +79,67 @@ public class FragmentPage1 extends Fragment {
         searchID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                handlesearch();
+
+                seid = v.findViewById(R.id.seach_ID_text); // id 입력 텍스트 가져오기
+                if (seid.getText().toString().length() == 0) {//공백일 때 처리할 내용
+                    Toast.makeText(getView().getContext(), "검색할 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                } else { //공백이 아닐 때 처리할 내용
+                    searchid = (seid.getText()).toString();
+                    //(아래)값 제대로 들어가나 확인 용
+                    Toast.makeText(getActivity(), searchid, Toast.LENGTH_LONG).show();
+
+                    HashMap<String, String> map1 = new HashMap<>();
+                    map1.put("searchid", searchid);
+
+                    Call<String> call = retrofitInterface.searchGroup(map1);
+
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.code() == 200) {
+                                //서버에서 그룹 이름 값 가져오기
+                                g_name = response.body();
+
+                                ffadapter= new fadapter(getContext(), searchid, response.body());
+                                Toast.makeText(getActivity(), "일치합니다.", Toast.LENGTH_LONG).show();
+
+                                recyclerView.setAdapter(ffadapter);
+
+
+                            }
+                            else if(response.code()==400){
+                                //일치하는 항목이 없음
+                                //다이얼로그 일치하는 항목 없슴다~
+
+                                //showDialog2(item, position, holder);
+                                Toast.makeText(getActivity(), "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
+                            }
+                            else if(response.code() == 404){
+                                Toast.makeText(getActivity(), "404 오류", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                        }
+                    });
+                }
             }
         });
         // 리사이클
         recyclerView = v.findViewById(R.id.recyclerView1);
         LinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(LinearLayoutManager);
-        Fadapter= new fadapter();
 
-        //리사이클 확인 용
-        fadapter.items.add(new fgroup("무지","감자",""));
-        recyclerView.setAdapter(Fadapter);
 
         return v;
     }
 
     private void handlesearch() {
 
-        seid = v.findViewById(R.id.seach_ID_text); // id 입력 텍스트 가져오기
-        if (seid.getText().toString().length() == 0) {//공백일 때 처리할 내용
-            Toast.makeText(getView().getContext(), "검색할 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
-        } else { //공백이 아닐 때 처리할 내용
-            searchid = (seid.getText()).toString();
-                    //(아래)값 제대로 들어가나 확인 용
-            Toast.makeText(getActivity(), searchid, Toast.LENGTH_LONG).show();
 
-            HashMap<String, String> map1 = new HashMap<>();
-            map1.put("searchid", searchid);
-
-            Call<String> call = retrofitInterface.searchGroup(map1);
-
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.code() == 200) {
-                        //리사이클 초기화
-                        Fadapter.items.clear();
-                        //서버에서 그룹 이름 값 가져오기
-                        g_name = response.body();
-                        setname(g_name);
-                        ffadapter= new fadapter(getContext(), response.body());
-                        makeRe();
-                        Toast.makeText(getActivity(), "일치합니다.", Toast.LENGTH_LONG).show();
-
-                    }
-                    else if(response.code()==400){
-                        //일치하는 항목이 없음
-                        //다이얼로그 일치하는 항목 없슴다~
-
-                        //showDialog2(item, position, holder);
-                        Toast.makeText(getActivity(), "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
-                    }
-                    else if(response.code() == 404){
-                        Toast.makeText(getActivity(), "404 오류", Toast.LENGTH_LONG).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                }
-            });
-        }
     }
 
-    private void makeRe() {
-        //***함수로 가져오기
-        fadapter.items.add(new fgroup(g_name,searchid,""));
-        recyclerView.setAdapter(Fadapter);
-    }
 
-    public void setname(String a){ this.g_name= a;}
-
-    public String getgname(){
-       return g_name;
-    }
 
 
     @Override

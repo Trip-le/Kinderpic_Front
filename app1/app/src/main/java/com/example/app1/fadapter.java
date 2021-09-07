@@ -2,6 +2,7 @@ package com.example.app1;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,28 +32,32 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
-    public static ArrayList<fgroup> items=new ArrayList<>();
+    //public static ArrayList<fgroup> items=new ArrayList<>();
     private Dialog dialog;
     private Context context;
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.101:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     //
-    private String gid;
+    private String[] gname={"1"};
+    private String[] gid={"1"};
 
 
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return gname.length;
     }
 
-    public fadapter(Context context, String items){
+    public fadapter(Context context, String gid, String gname){
         this.context=context;
-        this.gid=items;
+        this.gid[0]=gid;
+        this.gname[0]=gname;
+        Log.d("채크",gid);
+        Log.d("채크",gname);
     }
-    public fadapter(){};
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -78,15 +83,16 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        fgroup item = items.get(position);
-        holder.setItem(item);
+        String gname=this.gname[position];
+        String gid=this.gid[position];
+        holder.setItem(gname, gid);
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog=new Dialog(holder._ctx);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.fragment1_dialog);
-                showDialog2(item, position, holder);
+                showDialog2(gid, position, holder);
             }
         });
     }
@@ -95,7 +101,6 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         Context _ctx;
         private TextView tv;
         private TextView iv;
-        fgroup Data;
 
         public ViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -103,14 +108,13 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
             tv=itemView.findViewById(R.id.group_Na);
             iv=itemView.findViewById(R.id.group_Code);
         }
-        void setItem(fgroup data){
-            Data=data;
-            iv.setText(data.getCode());
-            tv.setText(data.getName());
+        void setItem(String gname, String gid){
+            iv.setText(gid);
+            tv.setText(gname);
         }
 
     }
-    public void showDialog2(fgroup item, int position, fadapter.ViewHolder holder){
+    public void showDialog2(String gid, int position, fadapter.ViewHolder holder){
         dialog.show(); // 다이얼로그 띄우기
         Button yes=dialog.findViewById(R.id.group_yes);
         Button no=dialog.findViewById(R.id.group_no);
@@ -136,13 +140,14 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
                 //LoginActivity activity = new LoginActivity();
                 //String b= page1.getgname();
                 //String c=fgroup.getName();
+                Toast.makeText(context,gid,Toast.LENGTH_SHORT).show();
                 map.put("groupid", gid);
                 //map.put("email", "c");
                 map.put("email", MainActivity.p_email);
-                Call <searchResult> call = retrofitInterface.addSearchGroup(map);
-                call.enqueue(new Callback<searchResult>() {
+                Call <Void> call = retrofitInterface.addSearchGroup(map);
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<searchResult> call, Response<searchResult> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
 
                             Toast.makeText(context, "2. 가입했습니다.", Toast.LENGTH_LONG).show();
@@ -157,7 +162,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
                     }
 
                     @Override
-                    public void onFailure(Call<searchResult> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
 
                     }
                 });
