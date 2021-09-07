@@ -42,7 +42,7 @@ public class FragmentPage1 extends Fragment {
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://192.168.219.102:3000";
     private EditText seid;
     private String searchid;
     private View v;
@@ -60,6 +60,7 @@ public class FragmentPage1 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         v= inflater.inflate(R.layout.fragment1,container,false);
+
 
         //서버
         Gson gson=new GsonBuilder()
@@ -86,7 +87,7 @@ public class FragmentPage1 extends Fragment {
                 } else { //공백이 아닐 때 처리할 내용
                     searchid = (seid.getText()).toString();
                     //(아래)값 제대로 들어가나 확인 용
-                    Toast.makeText(getActivity(), searchid, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), searchid, Toast.LENGTH_LONG).show();
 
                     HashMap<String, String> map1 = new HashMap<>();
                     map1.put("searchid", searchid);
@@ -101,18 +102,26 @@ public class FragmentPage1 extends Fragment {
                                 g_name = response.body();
 
                                 ffadapter= new fadapter(getContext(), searchid, response.body());
-                                Toast.makeText(getActivity(), "일치합니다.", Toast.LENGTH_LONG).show();
-
+                                //Toast.makeText(getActivity(), "일치합니다.", Toast.LENGTH_LONG).show();
                                 recyclerView.setAdapter(ffadapter);
 
 
                             }
                             else if(response.code()==400){
-                                //일치하는 항목이 없음
-                                //다이얼로그 일치하는 항목 없슴다~
-
-                                //showDialog2(item, position, holder);
-                                Toast.makeText(getActivity(), "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
+                                //일치없음
+                                dialog=new Dialog(getContext());
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.setContentView(R.layout.fragment1_check);
+                                dialog.show();
+                                Button check = dialog.findViewById(R.id.group_check);
+                                check.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //Toast.makeText(getContext(),"돌아갑니다.",Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                });
+                                //Toast.makeText(getActivity(), "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
                             }
                             else if(response.code() == 404){
                                 Toast.makeText(getActivity(), "404 오류", Toast.LENGTH_LONG).show();
@@ -130,17 +139,8 @@ public class FragmentPage1 extends Fragment {
         LinearLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(LinearLayoutManager);
 
-
         return v;
     }
-
-    private void handlesearch() {
-
-
-    }
-
-
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

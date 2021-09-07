@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://192.168.219.102:3000";
     //
     private String[] gname={"1"};
     private String[] gid={"1"};
@@ -86,18 +87,19 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         String gname=this.gname[position];
         String gid=this.gid[position];
         holder.setItem(gname, gid);
-        holder.tv.setOnClickListener(new View.OnClickListener() {
+        holder.L.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog=new Dialog(holder._ctx);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.fragment1_dialog);
-                showDialog2(gid, position, holder);
+                showDialog2(gid, gname , holder);
             }
         });
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        private View L;
         Context _ctx;
         private TextView tv;
         private TextView iv;
@@ -107,6 +109,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
             this._ctx=context;
             tv=itemView.findViewById(R.id.group_Na);
             iv=itemView.findViewById(R.id.group_Code);
+            L=itemView.findViewById(R.id.refgroup);
         }
         void setItem(String gname, String gid){
             iv.setText(gid);
@@ -114,7 +117,10 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         }
 
     }
-    public void showDialog2(String gid, int position, fadapter.ViewHolder holder){
+    public void showDialog2(String gid, String gname, fadapter.ViewHolder holder){
+        TextView add = dialog.findViewById(R.id.groupadd_dia);
+        add.setText(gname + "를 추가하시겠습니까?");
+
         dialog.show(); // 다이얼로그 띄우기
         Button yes=dialog.findViewById(R.id.group_yes);
         Button no=dialog.findViewById(R.id.group_no);
@@ -122,8 +128,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"취소했습니다.",Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(context,"취소했습니다.",Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -131,33 +136,27 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"1. 가입했습니다.",Toast.LENGTH_SHORT).show();
+
+
                 //서버 쪽으로 이메일 정보 보내기
                 HashMap<String, String> map = new HashMap<>();
-
-                //FragmentPage1 page1= new FragmentPage1();
-                //MainActivity main=new MainActivity();
-                //LoginActivity activity = new LoginActivity();
-                //String b= page1.getgname();
-                //String c=fgroup.getName();
-                Toast.makeText(context,gid,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"1. 가입했습니다.",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,gid,Toast.LENGTH_SHORT).show();
                 map.put("groupid", gid);
-                //map.put("email", "c");
                 map.put("email", MainActivity.p_email);
                 Call <Void> call = retrofitInterface.addSearchGroup(map);
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.code() == 200) {
-
-                            Toast.makeText(context, "2. 가입했습니다.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "가입했습니다.", Toast.LENGTH_LONG).show();
                         }
                         else if(response.code()==400){
 
-                            Toast.makeText(context, "참가 실패 .", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(context, "참가 실패 .", Toast.LENGTH_LONG).show();
                         }
                         else if(response.code() == 404){
-                            Toast.makeText(context, "404 오류", Toast.LENGTH_LONG).show();
+                           Toast.makeText(context, "404 오류", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -166,33 +165,6 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
 
                     }
                 });
-
-
-                /*
-                Call<String> call = retrofitInterface.addSearchGroup(map);
-
-                call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.code() == 200) {
-
-                            Toast.makeText(context, "2. 가입했습니다.", Toast.LENGTH_LONG).show();
-                        }
-                        else if(response.code()==400){
-
-                            Toast.makeText(context, "일치하는 값이 없습니다.", Toast.LENGTH_LONG).show();
-                        }
-                        else if(response.code() == 404){
-                            Toast.makeText(context, "404 오류", Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
-                    }
-                });
-                */
 
                 dialog.dismiss();
             }
