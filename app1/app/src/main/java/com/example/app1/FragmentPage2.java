@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -38,9 +39,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FragmentPage2 extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.102:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     private GridLayoutManager GridLayoutManager;
     private adapter Gadapter;
+    private String gnames[];
+    private ArrayList<String> gnamelist=new ArrayList<>();
+    private String gonames[];
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class FragmentPage2 extends Fragment {
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
 
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+
         FloatingActionButton fab = (FloatingActionButton)v.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,9 +73,29 @@ public class FragmentPage2 extends Fragment {
         });
 
         ImageButton seach = (ImageButton) v.findViewById(R.id.seach);
+        EditText seachString=(EditText)v.findViewById(R.id.seachString);
         seach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gnamelist.clear();
+                for(int i=0;i<gnames.length;i++){
+                    if(gnames[i].contains(seachString.getText())&&!seachString.getText().toString().equals("")){
+                        gnamelist.add(gnames[i]);
+                    }
+                }
+
+                if(gnamelist.isEmpty()){
+                    recyclerView.removeAllViewsInLayout();
+                    Gadapter= new adapter(getContext(), gnames);
+                    recyclerView.setAdapter(Gadapter);
+                    Toast.makeText(getContext(),"일치하는 값이 없습니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    gonames=gnamelist.toArray(new String[0]);
+                    recyclerView.removeAllViewsInLayout();
+                    Gadapter= new adapter(getContext(), gonames);
+                    recyclerView.setAdapter(Gadapter);
+                }
+
                 Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"검색", Toast.LENGTH_SHORT);
                 myToast.show();
             }
@@ -90,11 +116,12 @@ public class FragmentPage2 extends Fragment {
                     String[] a=response.body();
                     //Log.d("체크",a[0]);
 
-                    RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+                    gnames=response.body();
+
                     GridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(),2);
                     recyclerView.setLayoutManager(GridLayoutManager);
                     Gadapter= new adapter(getContext(), response.body());
-
+                    Gadapter.notifyDataSetChanged();
                     recyclerView.setAdapter(Gadapter);
                 }
                 else if(response.code() == 400){

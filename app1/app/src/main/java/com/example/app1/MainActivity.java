@@ -151,7 +151,10 @@ public class MainActivity extends AppCompatActivity {
             fragment=new FragmentPage2();
             fragmentTransaction.add(R.id.content_layout, fragment, tag2);
         } else {
-            fragmentTransaction.show(fragment);
+            fragmentTransaction.remove(fragment);
+            fragment=new FragmentPage2();
+            fragmentTransaction.add(R.id.content_layout, fragment, tag2);
+            //fragmentTransaction.show(fragment);
         }
 
         clearBackStack();
@@ -395,13 +398,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //프래그먼트 새로고침
-    public void reflash(){
-        Fragment frg = null;
-        frg = getSupportFragmentManager().findFragmentByTag(tag1);
-        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.detach(frg);
-        ft.attach(frg);
-        ft.commit();
+    public void reflash(String tag){
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
     }
 
 }

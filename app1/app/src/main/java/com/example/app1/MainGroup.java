@@ -54,7 +54,7 @@ import static com.example.app1.MainActivity.p_name;
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.102:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     Dialog Dinfo;
@@ -161,7 +161,7 @@ public class MainGroup extends Fragment {
     public void showinfo(){
         Dinfo.show(); // 다이얼로그 띄우기
         TextView tv1=Dinfo.findViewById(R.id.groupn);
-        tv1.setText(tv1.getText()+": "+GName);
+        tv1.setText("그룹명: "+GName);
         TextView tv2=Dinfo.findViewById(R.id.groupl);
         TextView tv3=Dinfo.findViewById(R.id.groupd);
         TextView tv4=Dinfo.findViewById(R.id.groupf);
@@ -181,9 +181,9 @@ public class MainGroup extends Fragment {
 
                     groupResult result = response.body();
 
-                    tv2.setText(tv2.getText()+result.getGroup_place());
-                    tv3.setText(tv3.getText()+result.getGroup_date());
-                    tv4.setText(tv4.getText()+result.getGroup_schoolinfo());
+                    tv2.setText("위치: "+result.getGroup_place());
+                    tv3.setText("날짜: "+result.getGroup_date());
+                    tv4.setText("학교 학급명: "+result.getGroup_schoolinfo());
 
                 }
                 else if(response.code() == 400){
