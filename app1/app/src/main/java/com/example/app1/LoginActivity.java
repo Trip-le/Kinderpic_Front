@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.35.105:3000";
+    private String BASE_URL = "http://192.168.219.102:3000";
     private EditText logid;
     private EditText logpass;
     private Button login;
@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //changeMain();
                 handleLogin();
             }
         });
@@ -77,6 +78,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void changeMain() { //메인으로
         Intent intent = new Intent(this, MainActivity.class);
+        //액티비티 스택제거
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
         Bundle bundle = new Bundle();
 
         bundle.putString("email", intent_email);
@@ -132,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     //키보드 내리기
     @Override

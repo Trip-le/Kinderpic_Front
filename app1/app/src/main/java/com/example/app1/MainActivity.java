@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -150,9 +151,13 @@ public class MainActivity extends AppCompatActivity {
             fragment=new FragmentPage2();
             fragmentTransaction.add(R.id.content_layout, fragment, tag2);
         } else {
-            fragmentTransaction.show(fragment);
+            fragmentTransaction.remove(fragment);
+            fragment=new FragmentPage2();
+            fragmentTransaction.add(R.id.content_layout, fragment, tag2);
+            //fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -184,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.show(fragment);
         }
 
+        clearBackStack();
         fragmentTransaction.setPrimaryNavigationFragment(fragment);
         fragmentTransaction.setReorderingAllowed(true);
         fragmentTransaction.commitNow();
@@ -336,6 +342,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //백스택 제거
+    private void clearBackStack() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        while (fragmentManager.getBackStackEntryCount() != 0) {
+            fragmentManager.popBackStackImmediate();
+        }
+    }
 
     //프래그먼트 트랜젝션 삭제
     public void remove(String tag){
@@ -382,6 +395,13 @@ public class MainActivity extends AppCompatActivity {
             view = new View(this);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    //프래그먼트 새로고침
+    public void reflash(String tag){
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
     }
 
 }

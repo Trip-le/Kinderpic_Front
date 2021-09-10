@@ -1,11 +1,7 @@
 package com.example.app1;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +15,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddGroup extends Fragment {
+    private Retrofit retrofit;
+    private RetrofitInterface retrofitInterface;
+    private String BASE_URL = "http://192.168.219.102:3000";
     String Gname;
     String Gday;
     String Gplace;
@@ -42,6 +48,17 @@ public class AddGroup extends Fragment {
         EditText P = (EditText) v.findViewById(R.id.GPlace);
         EditText M = (EditText) v.findViewById(R.id.MyName);
 
+        Gson gson=new GsonBuilder()
+                .setLenient()
+                .create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        retrofitInterface = retrofit.create(RetrofitInterface.class);
+
         Button FaddB = (Button) v.findViewById(R.id.FaddB);
         FaddB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,13 +76,33 @@ public class AddGroup extends Fragment {
                     Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"학급명을 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                 }else {
-                    Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
-                    myToast.show();
-                    F.setTextSize(Dimension.DP, 100);
-                    F.setTextColor(Color.parseColor("#980000"));
-                    F.setText("ABCDEF");//그룹 아이디 생성해야함
-                    //올바르게 생성하였을 때
-                    create=1;
+
+                    Call<String> call = retrofitInterface.groupId();
+
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if (response.code() == 200) {
+                                        String groupId=response.body();
+                                        F.setTextSize(Dimension.DP, 100);
+                                        F.setTextColor(Color.parseColor("#980000"));
+                                        F.setText(groupId);
+                                        create=1;
+                                        Toast myToast = Toast.makeText(getActivity().getApplicationContext(), "그룹 아이디를 생성합니다", Toast.LENGTH_SHORT);
+                                myToast.show();
+
+                            } else if (response.code() == 400) {
+                                Toast.makeText(getView().getContext(), "404 오류", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(getView().getContext(), t.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             }
         });
@@ -77,21 +114,47 @@ public class AddGroup extends Fragment {
                 if(create==1){
                     create=0;
                     //내용저장
-                    Gname=N.getText().toString();
-                    Gday=D.getText().toString();
-                    Gplace=P.getText().toString();
-                    Myname=M.getText().toString();
-                    Fname=F.getText().toString();
-
-                    //내용 전송 추가해야함
+                    Fname=F.getText().toString();//그룹아이디
+                    Gname=N.getText().toString();//그룹이름
+                    Gday=D.getText().toString();//날짜
+                    Gplace=P.getText().toString();//장소
+                    Myname=M.getText().toString();//학교학급명
 
 
-                    adapter Gadapter= new adapter();
-                    Gadapter.items.add(new group(Gname,""));//그룹추가
+                    // HashMap에 그룹 정보 저장
+                    HashMap<String, String> map = new HashMap<>();
 
-                    Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"그룹을 추가했습니다", Toast.LENGTH_SHORT);
-                    myToast.show();
-                    ((MainActivity)getActivity()).addGroup2();
+                    map.put("groupid", Fname);
+                    map.put("email", MainActivity.p_email);
+                    map.put("groupname", Gname);
+                    map.put("groupdate", Gday);
+                    map.put("groupplace", Gplace);
+                    map.put("scohoolinfo", Myname);
+
+                    Call<String> call = retrofitInterface.addGroup(map);
+
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(getView().getContext(), response.body(), Toast.LENGTH_SHORT).show();
+                                ((MainActivity)getActivity()).addGroup2();
+                            }
+                            else if(response.code() == 400){
+                                Toast.makeText(getView().getContext(), (CharSequence) response.body(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(getView().getContext(), t.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    //adapter Gadapter= new adapter();
+                    //Gadapter.items.add(new group(Gname,""));//그룹추가
+
                 }else {
                     Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"그룹아이디를 생성해주세요", Toast.LENGTH_SHORT);
                     myToast.show();

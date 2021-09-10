@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -51,7 +54,7 @@ import static com.example.app1.MainActivity.p_name;
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.35.105:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     Dialog Dinfo;
@@ -61,13 +64,16 @@ public class MainGroup extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        Gson gson=new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         retrofitInterface = retrofit.create(RetrofitInterface.class);
-
 
         setHasOptionsMenu(true);
         View v= inflater.inflate(R.layout.maingroup, container, false);
@@ -76,6 +82,10 @@ public class MainGroup extends Fragment {
         GName=bundle.getString("name");
         TextView Gname=(TextView)v.findViewById(R.id.Gname);
         Gname.setText(GName);
+
+
+
+
 
 
         Dinfo=new Dialog(container.getContext());
@@ -151,13 +161,44 @@ public class MainGroup extends Fragment {
     public void showinfo(){
         Dinfo.show(); // 다이얼로그 띄우기
         TextView tv1=Dinfo.findViewById(R.id.groupn);
+        tv1.setText("그룹명: "+GName);
         TextView tv2=Dinfo.findViewById(R.id.groupl);
         TextView tv3=Dinfo.findViewById(R.id.groupd);
         TextView tv4=Dinfo.findViewById(R.id.groupf);
-        tv1.setText(GName);
-        tv2.setText(tv2.getText()+"서울");
-        tv3.setText(tv3.getText()+"3.14");
-        tv4.setText(tv4.getText()+"덕성여대 컴공과");
+
+        HashMap<String, String> map = new HashMap<>();
+
+        map.put("email", MainActivity.p_email);
+        map.put("groupname", GName);
+
+        Call<groupResult> call = retrofitInterface.showGroup(map);
+
+        call.enqueue(new Callback<groupResult>() {
+            @Override
+            public void onResponse(Call<groupResult> call, Response<groupResult> response) {
+                Toast.makeText(getContext(),String.valueOf(response.code()),Toast.LENGTH_SHORT).show();
+                if (response.code() == 200) {
+
+                    groupResult result = response.body();
+
+                    tv2.setText("위치: "+result.getGroup_place());
+                    tv3.setText("날짜: "+result.getGroup_date());
+                    tv4.setText("학교 학급명: "+result.getGroup_schoolinfo());
+
+                }
+                else if(response.code() == 400){
+                    Toast.makeText(getView().getContext(), "불러오기 오류", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<groupResult> call, Throwable t) {
+                Toast.makeText(getView().getContext(), t.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         Dinfo.findViewById(R.id.ok).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,8 +228,14 @@ public class MainGroup extends Fragment {
             if (resultCode == RESULT_OK) {
                 ClipData clipData = data.getClipData();
                 Uri fileUri = data.getData();
+                ArrayList<Uri> filePathList = new ArrayList<>();
 
-
+                for (int i = 0; i < clipData.getItemCount(); i++) {
+                    Uri tempUri;
+                    tempUri = clipData.getItemAt(i).getUri();
+                    Log.i("temp: ", i + " " + tempUri.toString());
+                    filePathList.add(tempUri);
+                }
 
                 ContentResolver resolver = getActivity().getContentResolver();
                 try {

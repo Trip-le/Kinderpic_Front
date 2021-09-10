@@ -3,21 +3,36 @@
 android:orientation="horizontal" android:layout_width="match_parent"
 android:layout_height="wrap_content"
     android:background="#FFFCEF">
-    <ImageView
-        android:id="@+id/imv1"
-        android:layout_margin="15dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ic_user"/>
-
-    <TextView
-        android:id="@+id/group_ID"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USER ID"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:layout_gravity="center"
-        android:paddingRight="30dp"
-        />
+        android:id="@+id/refgroup">
+        <TextView
+            android:id="@+id/group_Na"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GroupCode"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:paddingRight="30dp"
+            />
+        <View
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:background="#DD3F47"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"/>
+
+        <TextView
+            android:id="@+id/group_Code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Group Name"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:paddingRight="30dp"
+            />
+    </LinearLayout>
 </LinearLayout>

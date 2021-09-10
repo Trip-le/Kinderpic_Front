@@ -33,8 +33,7 @@
             android:textColor="@color/black"
             android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/permanentmarkerregular"
-            android:textSize="50dp"/>
+            android:textSize="40dp"/>
 
     </FrameLayout>
     <FrameLayout
@@ -42,12 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10">
-        <ImageView
-            android:layout_width="380dp"
-            android:layout_height="270dp"
-            android:src="@drawable/plain3"
-            android:layout_gravity="right|bottom"
-            android:foreground="#BFFFFCEF"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="20dp"
             android:id="@+id/grecyclerView"

@@ -23,7 +23,6 @@
             android:textColor="@color/black"
             android:layout_margin="5dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/permanentmarkerregular"
             android:textSize="30dp"/>
     </FrameLayout>
     <LinearLayout

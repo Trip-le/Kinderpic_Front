@@ -1,5 +1,6 @@
 package com.example.app1;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RetrofitInterface {
 
@@ -35,5 +38,26 @@ public interface RetrofitInterface {
     @POST("/groupimage")
     Call<Void> Image(@Header("Token") String map, @Part List<MultipartBody.Part> Imgs);
 
+    @GET("/groupid")
+    Call<String> groupId();
+
+    @POST("/add_group")
+    Call<String> addGroup(@Body HashMap<String,String>map);
+
+    @POST("/home")
+    Call<String[]> getgroup(@Body HashMap<String,String> map);
+
+    @POST("/group")
+    Call<groupResult> showGroup(@Body HashMap<String,String> map);
+
+    @POST("/search_group")
+    //Call<String> searchGroup(@Body String string);
+    Call<String> searchGroup(@Body HashMap<String,String>map);
+
+    @POST("/add_search_group")
+    Call<Void> addSearchGroup(@Body HashMap<String,String>map);
+
+    @POST("/delete_group")
+    Call<Void> delGroup(@Body HashMap<String,String> map);
 
 }
