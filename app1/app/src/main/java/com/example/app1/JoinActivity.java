@@ -293,12 +293,12 @@ public class JoinActivity extends AppCompatActivity {
                         files.add(filePart);
                     }
 
-                    Call<ImageResult> call = retrofitInterface.Image(email.getText().toString(), files);
+                    Call<Void> call = retrofitInterface.Image(email.getText().toString(), files);
 
 
-                    call.enqueue(new Callback<ImageResult>() {
+                    call.enqueue(new Callback<Void>() {
                         @Override
-                        public void onResponse(Call<ImageResult> call, Response<ImageResult> response) {
+                        public void onResponse(Call<Void> call, Response<Void> response) {
                             if (response.code() == 200) {
                                 Toast.makeText(JoinActivity.this, "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
                             }
@@ -308,7 +308,7 @@ public class JoinActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<ImageResult> call, Throwable t) {
+                        public void onFailure(Call<Void> call, Throwable t) {
                             Toast.makeText(JoinActivity.this, t.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }

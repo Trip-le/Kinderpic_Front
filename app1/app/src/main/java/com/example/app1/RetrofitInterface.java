@@ -33,7 +33,7 @@ public interface RetrofitInterface {
     // 프로필 이미지 보내기
     @Multipart
     @POST("/groupimage")
-    Call<ImageResult> Image(@Header("Token") String map, @Part List<MultipartBody.Part> Imgs);
+    Call<Void> Image(@Header("Token") String map, @Part List<MultipartBody.Part> Imgs);
 
 
 }
