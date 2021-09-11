@@ -48,7 +48,7 @@ import static com.example.app1.MainActivity.p_name;
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.102:3000";
+    private String BASE_URL = "http://192.168.35.105:3000";
     private EditText email;
     private EditText pass;
     private EditText passCheck;
@@ -61,6 +61,7 @@ public class JoinActivity extends AppCompatActivity {
     private LinearLayout email_check_Li;
     private EditText email_check;
     private Button email_check_Button;
+    private String email_string;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +105,9 @@ public class JoinActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // 인증메일 보내기
                 email_check_Li.setVisibility(View.VISIBLE);
-
+                email_string = email.getText().toString();
                 HashMap<String, String> map = new HashMap<>();
-                map.put("email", email.getText().toString());
+                map.put("email", email_string);
 
 
                 Call<CheckResult> call = retrofitInterface.executeCheck(map);
@@ -276,13 +277,13 @@ public class JoinActivity extends AppCompatActivity {
                     //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장*/
 
                     ArrayList<MultipartBody.Part> files = new ArrayList<>();
+                    HashMap<String, RequestBody> map = new HashMap<>();
 
 
                     // 파일 경로들을 가지고있는 `ArrayList<Uri> filePathList`가 있다고 칩시다...
                     for (int i = 0; i < filePathList.size(); ++i) {
                         // Uri 타입의 파일경로를 가지는 RequestBody 객체 생성
                         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(filePathList.get(i)));
-
                         // 사진 파일 이름
                         String fileName = "photo" + i + ".jpg";
                         // RequestBody로 Multipart.Part 객체 생성
@@ -293,7 +294,11 @@ public class JoinActivity extends AppCompatActivity {
                         files.add(filePart);
                     }
 
-                    Call<Void> call = retrofitInterface.Image(email.getText().toString(), files);
+                    RequestBody email = RequestBody.create(MediaType.parse("text/plain"), email_string);
+                    map.put("email", email);
+
+                    String token = email_string;
+                    Call<Void> call = retrofitInterface.Image(token, files, map);
 
 
                     call.enqueue(new Callback<Void>() {
