@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "961572882669",
+    "project_id": "kinderpic-19fff",
+    "storage_bucket": "kinderpic-19fff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961572882669:android:ed4893bf8e522e938e24e4",
+        "android_client_info": {
+          "package_name": "com.example.app1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961572882669-baab0l4e7osuhhjknbavqi9181hujbla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1om3g7a-_NfS-YDj1UCMiY6ARJCBr1iU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961572882669-baab0l4e7osuhhjknbavqi9181hujbla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

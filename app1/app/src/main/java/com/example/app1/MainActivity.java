@@ -397,11 +397,9 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    //프래그먼트 새로고침
-    public void reflash(String tag){
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-
+    //프래그먼트 로그
+    public void getlog(String tag){
+        Log.d("감정", tag);
     }
 
 }

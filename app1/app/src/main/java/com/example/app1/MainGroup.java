@@ -27,16 +27,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.face.FirebaseVisionFace;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -57,12 +67,21 @@ public class MainGroup extends Fragment {
     private String BASE_URL = "http://192.168.0.3:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
+    private FirebaseVisionFaceDetectorOptions highAccuracyOpts;
     Dialog Dinfo;
     Dialog Dname;
     String GName;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        //얼굴 표정 분류 객체
+        highAccuracyOpts =
+                new FirebaseVisionFaceDetectorOptions.Builder()
+                        .setPerformanceMode(FirebaseVisionFaceDetectorOptions.ACCURATE)
+                        .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+                        .build();
+
 
         Gson gson=new GsonBuilder()
                 .setLenient()
@@ -238,9 +257,43 @@ public class MainGroup extends Fragment {
                 }
 
                 ContentResolver resolver = getActivity().getContentResolver();
+                InputStream instream = null;
                 try {
-                    InputStream instream = resolver.openInputStream(fileUri);
-                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    instream = resolver.openInputStream(fileUri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+
+                FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(imgBitmap);
+                FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
+                        .getVisionFaceDetector(highAccuracyOpts);
+
+                Task<List<FirebaseVisionFace>> result =
+                        detector.detectInImage(image)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<List<FirebaseVisionFace>>() {
+                                            @Override
+                                            public void onSuccess(List<FirebaseVisionFace> faces) {
+                                                for (FirebaseVisionFace face : faces) {
+                                                    if (face.getSmilingProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
+                                                        float smileProb = face.getSmilingProbability();
+                                                        Toast.makeText(getContext(), Float.toString(smileProb),Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            }
+                                        })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Task failed with an exception
+                                                // ...
+                                            }
+                                        });
+
+
+                try {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     imgBitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
                     RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), byteArrayOutputStream.toByteArray());

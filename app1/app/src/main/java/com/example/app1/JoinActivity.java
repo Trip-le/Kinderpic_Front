@@ -48,7 +48,7 @@ import static com.example.app1.MainActivity.p_name;
 public class JoinActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.102:3000";
+    private String BASE_URL = "http://192.168.0.3:3000";
     private EditText email;
     private EditText pass;
     private EditText passCheck;
@@ -167,8 +167,9 @@ public class JoinActivity extends AppCompatActivity {
                 else {
                     HashMap<String, String> map = new HashMap<>();
                     map.put("email", email.getText().toString());
+                    String part[] = email.getText().toString().split("@");
                     map.put("password", pass.getText().toString());
-                    map.put("name", name.getText().toString());
+                    map.put("name", name.getText().toString()+"_"+part[0]);
                     if(teacher.isChecked()){
                         map.put("job", "선생님");
                     }
