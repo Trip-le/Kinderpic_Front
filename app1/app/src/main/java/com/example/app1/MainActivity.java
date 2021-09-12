@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = intent.getExtras();
 
-        p_email = bundle.getString("email");
         p_name = bundle.getString("name");
+        p_email = bundle.getString("email");
         p_password = bundle.getString("password");
 
         mBottomNV = findViewById(R.id.nav_view);
@@ -183,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment fragment=fragmentManager.findFragmentByTag(tag3);
         if (fragment == null) {
+            fragmentTransaction.remove(fragment);
             fragment=new FragmentPage3();
             fragmentTransaction.add(R.id.content_layout, fragment, tag3);
         } else {
@@ -208,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle=new Bundle();
         bundle.putString("name",name);
-
 
         Fragment fragment=fragmentManager.findFragmentByTag("mg");
         if (fragment == null) {

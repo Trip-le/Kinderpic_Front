@@ -168,8 +168,10 @@ public class JoinActivity extends AppCompatActivity {
                 else {
                     HashMap<String, String> map = new HashMap<>();
                     map.put("email", email.getText().toString());
+                    String part[] = email.getText().toString().split("@");
                     map.put("password", pass.getText().toString());
-                    map.put("name", name.getText().toString());
+                    map.put("name", name.getText().toString()+"_"+part[0]);
+
                     if(teacher.isChecked()){
                         map.put("job", "선생님");
                     }
