@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
+
     private String BASE_URL = "http://192.168.0.3:3000";
     private EditText logid;
     private EditText logpass;
@@ -116,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     intent_email = result.getEmail();
                     intent_password = result.getPassword();
+
                     //String[] notsplitname = result.getName().split("_");
                    // intent_name = notsplitname[0];
                     intent_name=result.getName();
