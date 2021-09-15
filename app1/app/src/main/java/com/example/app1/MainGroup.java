@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +69,7 @@ public class MainGroup extends Fragment {
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     private FirebaseVisionFaceDetectorOptions highAccuracyOpts;
+    private ArrayList<Uri> uriList2 = new ArrayList<>();//기준치 이상 이미지 리스트
     Dialog Dinfo;
     Dialog Dname;
     String GName;
@@ -101,10 +103,6 @@ public class MainGroup extends Fragment {
         GName=bundle.getString("name");
         TextView Gname=(TextView)v.findViewById(R.id.Gname);
         Gname.setText(GName);
-
-
-
-
 
 
         Dinfo=new Dialog(container.getContext());
@@ -157,6 +155,21 @@ public class MainGroup extends Fragment {
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
+
+                show_img_dialog show_img_dialog=new show_img_dialog(getContext(), (MainActivity) getActivity(), uriList2, new DialogClickListener() {
+                    @Override
+                    public void onPositiveClick() {
+                        Toast.makeText(getContext(),"이미지 전송",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNegativeClick() {
+                        Toast.makeText(getContext(),"업로드가 취소되었습니다.",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                show_img_dialog.setCanceledOnTouchOutside(false);//다이얼로그 외부 터치시 꺼짐
+                show_img_dialog.setCancelable(true);//뒤로가기 버튼으로 취소
+                show_img_dialog.show();
             }
         });
 
@@ -246,53 +259,67 @@ public class MainGroup extends Fragment {
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
                 ClipData clipData = data.getClipData();
-                Uri fileUri = data.getData();
-                ArrayList<Uri> filePathList = new ArrayList<>();
+                ArrayList<Bitmap> fileList = new ArrayList<>();
+                ArrayList<Uri> uriList = new ArrayList<>();
 
                 for (int i = 0; i < clipData.getItemCount(); i++) {
                     Uri tempUri;
                     tempUri = clipData.getItemAt(i).getUri();
-                    Log.i("temp: ", i + " " + tempUri.toString());
-                    filePathList.add(tempUri);
+                    uriList.add(tempUri);
+
+                    ContentResolver resolver = getActivity().getContentResolver();
+
+                    InputStream instream = null;
+                    try {
+                        instream = resolver.openInputStream(tempUri);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    try {
+                        instream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    fileList.add(imgBitmap);
                 }
 
-                ContentResolver resolver = getActivity().getContentResolver();
-                InputStream instream = null;
-                try {
-                    instream = resolver.openInputStream(fileUri);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                for(int i=0; i<fileList.size();i++){
+                    FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(fileList.get(i));
+                    FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
+                            .getVisionFaceDetector(highAccuracyOpts);
 
-                FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(imgBitmap);
-                FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
-                        .getVisionFaceDetector(highAccuracyOpts);
+                    int finalI = i;//현재 이미지 번호
 
-                Task<List<FirebaseVisionFace>> result =
-                        detector.detectInImage(image)
-                                .addOnSuccessListener(
-                                        new OnSuccessListener<List<FirebaseVisionFace>>() {
-                                            @Override
-                                            public void onSuccess(List<FirebaseVisionFace> faces) {
-                                                for (FirebaseVisionFace face : faces) {
-                                                    if (face.getSmilingProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
-                                                        float smileProb = face.getSmilingProbability();
-                                                        Toast.makeText(getContext(), Float.toString(smileProb),Toast.LENGTH_SHORT).show();
+                    Task<List<FirebaseVisionFace>> result =
+                            detector.detectInImage(image)
+                                    .addOnSuccessListener(
+                                            new OnSuccessListener<List<FirebaseVisionFace>>() {
+                                                @Override
+                                                public void onSuccess(List<FirebaseVisionFace> faces) {
+                                                    for (FirebaseVisionFace face : faces) {
+                                                        if (face.getSmilingProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
+                                                            float smileProb = face.getSmilingProbability();
+                                                            ((MainActivity)getActivity()).getlog(Float.toString(smileProb));
+                                                            if(smileProb>0.5)
+                                                                uriList2.add(uriList.get(finalI));
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        })
-                                .addOnFailureListener(
-                                        new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Task failed with an exception
-                                                // ...
-                                            }
-                                        });
+                                            })
+                                    .addOnFailureListener(
+                                            new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    // Task failed with an exception
+                                                    // ...
+                                                }
+                                            });
+                }
 
 
+/*
                 try {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     imgBitmap.compress(Bitmap.CompressFormat.JPEG, 20, byteArrayOutputStream);
@@ -301,7 +328,7 @@ public class MainGroup extends Fragment {
                     //imageView.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
                     //saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
-/*
+
                     Call<ImageResult> call = retrofitInterface.Image(p_email, uploadFile);
 
 
@@ -322,11 +349,12 @@ public class MainGroup extends Fragment {
                             Toast.makeText(getContext(), t.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
-                    });*/
+                    });
 
                 } catch (Exception e) {
                     Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
+            */
             }
         }
     }
