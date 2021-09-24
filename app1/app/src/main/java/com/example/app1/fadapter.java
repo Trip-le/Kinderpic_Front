@@ -39,7 +39,7 @@ public class fadapter extends RecyclerView.Adapter<fadapter.ViewHolder> {
     //서버 연결 쪽
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.219.102:3000";
+    private String BASE_URL = "http://13.209.5.100:3000";
     //
     private String[] gname={"1"};
     private String[] gid={"1"};

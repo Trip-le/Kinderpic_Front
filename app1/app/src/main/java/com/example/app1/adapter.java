@@ -34,7 +34,7 @@ public class adapter extends RecyclerView.Adapter<adapter.ViewHolder> {
     private Context context;
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.0.3:3000";
+    private String BASE_URL = "http://13.209.5.100:3000";
 
 
     public adapter(Context context, String[] items){
