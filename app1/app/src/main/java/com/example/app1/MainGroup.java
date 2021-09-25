@@ -1,12 +1,14 @@
 package com.example.app1;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -61,11 +63,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.app.Activity.RESULT_OK;
 import static com.example.app1.MainActivity.p_email;
 import static com.example.app1.MainActivity.p_name;
+import static com.example.app1.show_img_adapter.suc;
 
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://13.209.5.100:3000";
+    private String BASE_URL = "http://192.168.35.207:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     private FirebaseVisionFaceDetectorOptions highAccuracyOpts;
@@ -73,6 +76,9 @@ public class MainGroup extends Fragment {
     Dialog Dinfo;
     Dialog Dname;
     String GName;
+    show_img_dialog show_img_dialog;
+    CheckTypesTask task;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -156,7 +162,7 @@ public class MainGroup extends Fragment {
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
 
-                show_img_dialog show_img_dialog=new show_img_dialog(getContext(), (MainActivity) getActivity(), uriList2, new DialogClickListener() {
+                show_img_dialog=new show_img_dialog(getContext(), (MainActivity) getActivity(), uriList2, new DialogClickListener() {
                     @Override
                     public void onPositiveClick() {
                         Toast.makeText(getContext(),"이미지 전송",Toast.LENGTH_SHORT).show();
@@ -170,6 +176,9 @@ public class MainGroup extends Fragment {
                 show_img_dialog.setCanceledOnTouchOutside(false);//다이얼로그 외부 터치시 꺼짐
                 show_img_dialog.setCancelable(true);//뒤로가기 버튼으로 취소
                 show_img_dialog.show();
+                while(suc == -1){
+                    task.onPostExecute(null);
+                }
             }
         });
 
@@ -184,6 +193,8 @@ public class MainGroup extends Fragment {
         recyclerView.setAdapter(Gadapter);
         return v;
     }
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -240,6 +251,8 @@ public class MainGroup extends Fragment {
         });
     }
 
+
+
     public void showinfo2(){
         Dname.show(); // 다이얼로그 띄우기
         TextView names=Dname.findViewById(R.id.namearr);
@@ -252,6 +265,7 @@ public class MainGroup extends Fragment {
             }
         });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) { // 갤러리
@@ -317,6 +331,9 @@ public class MainGroup extends Fragment {
                                                 }
                                             });
                 }
+                task = new CheckTypesTask();
+                task.execute();
+
 
 
 /*
@@ -358,6 +375,41 @@ public class MainGroup extends Fragment {
             }
         }
     }
+
+    private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog asyncDialog = new ProgressDialog(
+                show_img_dialog.getContext());
+
+        @Override
+        public void onPreExecute() {
+            asyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            asyncDialog.setMessage("사진업로드중입니다..");
+
+            //show dialog
+            asyncDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        public Void doInBackground(Void... voids) {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    Thread.sleep(500);
+                }
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        public void onPostExecute(Void aVoid) {
+            asyncDialog.dismiss();
+            super.onPostExecute(aVoid);
+        }
+    }
+
 /*
     public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
         File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
@@ -372,3 +424,6 @@ public class MainGroup extends Fragment {
         }
     }*/
 }
+
+
+

@@ -13,9 +13,11 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+
 public class show_img_adapter extends RecyclerView.Adapter<show_img_adapter.ViewHolder> {
     private ArrayList<Uri> mData = null ;
     private Context mContext = null ;
+    public static int suc = 0;
 
     //생성자
     show_img_adapter(ArrayList<Uri> list, Context context){
@@ -50,6 +52,7 @@ public class show_img_adapter extends RecyclerView.Adapter<show_img_adapter.View
         Glide.with(mContext)
                 .load(image_uri)
                 .into(holder.image);
+        suc = -1;
     }
 
     @Override
