@@ -72,6 +72,7 @@ public class FragmentPage2 extends Fragment {
             }
         });
 
+        //
         ImageButton seach = (ImageButton) v.findViewById(R.id.seach);
         EditText seachString=(EditText)v.findViewById(R.id.seachString);
         seach.setOnClickListener(new View.OnClickListener() {

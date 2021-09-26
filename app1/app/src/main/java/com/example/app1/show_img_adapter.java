@@ -52,7 +52,9 @@ public class show_img_adapter extends RecyclerView.Adapter<show_img_adapter.View
         Glide.with(mContext)
                 .load(image_uri)
                 .into(holder.image);
-        suc = -1;
+        if(position==mData.size()){ //최대사이즈일 때 완료됐다는 것을 변수로 전달
+            suc = -1;
+        }
     }
 
     @Override
