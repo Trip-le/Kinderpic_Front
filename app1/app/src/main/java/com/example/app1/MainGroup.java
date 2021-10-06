@@ -162,23 +162,6 @@ public class MainGroup extends Fragment {
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 101);
 
-                show_img_dialog=new show_img_dialog(getContext(), (MainActivity) getActivity(), uriList2, new DialogClickListener() {
-                    @Override
-                    public void onPositiveClick() {
-                        Toast.makeText(getContext(),"이미지 전송",Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNegativeClick() {
-                        Toast.makeText(getContext(),"업로드가 취소되었습니다.",Toast.LENGTH_SHORT).show();
-                    }
-                });
-                show_img_dialog.setCanceledOnTouchOutside(false);//다이얼로그 외부 터치시 꺼짐
-                show_img_dialog.setCancelable(true);//뒤로가기 버튼으로 취소
-                show_img_dialog.show();
-                while(suc == -1){
-                    task.onPostExecute(null);
-                }
             }
         });
 
@@ -267,14 +250,15 @@ public class MainGroup extends Fragment {
     }
 
 
+    private ArrayList<Bitmap> fileList = new ArrayList<>();
+    private ArrayList<Uri> uriList = new ArrayList<>();
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) { // 갤러리
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
                 ClipData clipData = data.getClipData();
-                ArrayList<Bitmap> fileList = new ArrayList<>();
-                ArrayList<Uri> uriList = new ArrayList<>();
 
                 for (int i = 0; i < clipData.getItemCount(); i++) {
                     Uri tempUri;
@@ -299,41 +283,9 @@ public class MainGroup extends Fragment {
                     fileList.add(imgBitmap);
                 }
 
-                for(int i=0; i<fileList.size();i++){
-                    FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(fileList.get(i));
-                    FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
-                            .getVisionFaceDetector(highAccuracyOpts);
 
-                    int finalI = i;//현재 이미지 번호
-
-                    Task<List<FirebaseVisionFace>> result =
-                            detector.detectInImage(image)
-                                    .addOnSuccessListener(
-                                            new OnSuccessListener<List<FirebaseVisionFace>>() {
-                                                @Override
-                                                public void onSuccess(List<FirebaseVisionFace> faces) {
-                                                    for (FirebaseVisionFace face : faces) {
-                                                        if (face.getSmilingProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
-                                                            float smileProb = face.getSmilingProbability();
-                                                            ((MainActivity)getActivity()).getlog(Float.toString(smileProb));
-                                                            if(smileProb>0.5)
-                                                                uriList2.add(uriList.get(finalI));
-                                                        }
-                                                    }
-                                                }
-                                            })
-                                    .addOnFailureListener(
-                                            new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    // Task failed with an exception
-                                                    // ...
-                                                }
-                                            });
-                }
                 task = new CheckTypesTask();
                 task.execute();
-
 
 
 /*
@@ -376,10 +328,10 @@ public class MainGroup extends Fragment {
         }
     }
 
+    private int flag=0;
     private class CheckTypesTask extends AsyncTask<Void, Void, Void> {
 
-        ProgressDialog asyncDialog = new ProgressDialog(
-                show_img_dialog.getContext());
+        ProgressDialog asyncDialog = new ProgressDialog(getContext());
 
         @Override
         public void onPreExecute() {
@@ -392,21 +344,76 @@ public class MainGroup extends Fragment {
         }
 
         @Override
-        public Void doInBackground(Void... voids) {
-            try {
-                for (int i = 0; i < 5; i++) {
-                    Thread.sleep(500);
-                }
-            }catch(InterruptedException e){
-                e.printStackTrace();
+        public Void doInBackground(Void... voids) { //지정된 함수 실행
+            for(int i=0; i<fileList.size();i++){
+                FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(fileList.get(i));
+                FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
+                        .getVisionFaceDetector(highAccuracyOpts);
+
+                int finalI = i;//현재 이미지 번호
+
+                Task<List<FirebaseVisionFace>> result =
+                        detector.detectInImage(image)
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<List<FirebaseVisionFace>>() {
+                                            @Override
+                                            public void onSuccess(List<FirebaseVisionFace> faces) {
+                                                for (FirebaseVisionFace face : faces) {
+                                                    if (face.getSmilingProbability() != FirebaseVisionFace.UNCOMPUTED_PROBABILITY) {
+                                                        float smileProb = face.getSmilingProbability();
+                                                        ((MainActivity)getActivity()).getlog(Float.toString(smileProb));
+                                                        if(smileProb>0.5){
+                                                            uriList2.add(uriList.get(finalI));
+                                                            if(finalI==fileList.size()-1){
+                                                                flag=1;
+                                                                ((MainActivity)getActivity()).getlog(Integer.toString(flag));
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Task failed with an exception
+                                                // ...
+                                            }
+                                        });
+
             }
+
+
+                try {
+                    while(flag!=1){
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             return null;
         }
 
         @Override
-        public void onPostExecute(Void aVoid) {
+        public void onPostExecute(Void aVoid) {//진행도 max값 지정
             asyncDialog.dismiss();
             super.onPostExecute(aVoid);
+
+            show_img_dialog=new show_img_dialog(getContext(), (MainActivity) getActivity(), uriList2, new DialogClickListener() {
+                @Override
+                public void onPositiveClick() {
+                    Toast.makeText(getContext(),"이미지 전송",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onNegativeClick() {
+                    Toast.makeText(getContext(),"업로드가 취소되었습니다.",Toast.LENGTH_SHORT).show();
+                }
+            });
+            show_img_dialog.setCanceledOnTouchOutside(false);//다이얼로그 외부 터치시 꺼짐
+            show_img_dialog.setCancelable(true);//뒤로가기 버튼으로 취소
+            show_img_dialog.show();
         }
     }
 

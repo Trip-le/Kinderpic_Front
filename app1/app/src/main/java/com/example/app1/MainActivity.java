@@ -94,7 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
             fragmentTransaction.add(R.id.content_layout, fragment, tag);
         } else {
-            fragmentTransaction.show(fragment);
+            if(fragment==fragmentManager.findFragmentByTag(tag2)) { //메인 페이지 항시 리플래쉬
+                fragmentTransaction.remove(fragment);
+                fragment = new FragmentPage2();
+                fragmentTransaction.add(R.id.content_layout, fragment, tag2);
+            }else {
+                fragmentTransaction.show(fragment);
+            }
         }
 
         clearBackStack();
