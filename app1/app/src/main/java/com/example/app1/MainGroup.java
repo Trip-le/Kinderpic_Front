@@ -404,6 +404,53 @@ public class MainGroup extends Fragment {
                 @Override
                 public void onPositiveClick() {
                     Toast.makeText(getContext(),"이미지 전송",Toast.LENGTH_SHORT).show();
+
+                    try{
+
+                    ArrayList<MultipartBody.Part> files = new ArrayList<>();
+                    HashMap<String, RequestBody> map = new HashMap<>();
+
+
+                    for (int i = 0; i < uriList2.size(); ++i) {
+                        // Uri 타입의 파일경로를 가지는 RequestBody 객체 생성
+                        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(uriList2.get(i)));
+                        // 사진 파일 이름
+                        String fileName = p_name + i + ".jpg";
+                        // RequestBody로 Multipart.Part 객체 생성
+
+                        MultipartBody.Part filePart = MultipartBody.Part.createFormData("photo", fileName, fileBody);
+                        Log.i("fileName", filePart.toString());
+                        // 추가
+                        files.add(filePart);
+                    }
+
+                    RequestBody email = RequestBody.create(MediaType.parse("text/plain"), p_email);
+                    map.put("email", email);
+
+                    String token = p_email;
+                    Call<Void> call = retrofitInterface.EmotionImage(token, files, map);
+
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                Toast.makeText(getContext(), "파일 불러오기 성공", Toast.LENGTH_SHORT).show();
+                            }
+                            else if(response.code() == 404){
+                                Toast.makeText(getContext(), "404 오류", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "파일 불러오기 실패", Toast.LENGTH_SHORT).show();
+                }
+
                 }
 
                 @Override

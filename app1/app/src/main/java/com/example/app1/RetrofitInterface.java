@@ -38,6 +38,11 @@ public interface RetrofitInterface {
     @POST("/groupimage")
     Call<Void> Image(@Header("token")String token, @Part List<MultipartBody.Part> Imgs, @PartMap HashMap<String, RequestBody> data);
 
+    //감정분석된 이미지
+    @Multipart
+    @POST("/groupimage")
+    Call<Void> EmotionImage(@Header("token")String token, @Part List<MultipartBody.Part> Imgs, @PartMap HashMap<String, RequestBody> data);
+
     @GET("/groupid")
     Call<String> groupId();
 
