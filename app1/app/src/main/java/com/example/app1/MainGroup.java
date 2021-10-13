@@ -372,10 +372,10 @@ public class MainGroup extends Fragment {
                                                         ((MainActivity)getActivity()).getlog(Float.toString(smileProb));
                                                         if(smileProb>0.5){
                                                             uriList2.add(uriList.get(finalI));
-                                                            if(finalI==fileList.size()-1){
-                                                                flag=1;
-                                                                ((MainActivity)getActivity()).getlog(Integer.toString(flag));
-                                                            }
+                                                        }
+                                                        if(finalI==fileList.size()-1){
+                                                            flag=1;
+                                                            ((MainActivity)getActivity()).getlog(Integer.toString(flag));
                                                         }
                                                     }
                                                 }
