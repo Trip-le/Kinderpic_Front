@@ -68,7 +68,7 @@ import static com.example.app1.show_img_adapter.suc;
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://13.209.5.100:3000";
+    private String BASE_URL = "http://192.168.35.105:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     private FirebaseVisionFaceDetectorOptions highAccuracyOpts;
@@ -385,13 +385,13 @@ public class MainGroup extends Fragment {
             }
 
 
-                try {
-                    while(flag!=1){
-                        Thread.sleep(500);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            try {
+                while(flag!=1){
+                    Thread.sleep(500);
                 }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
@@ -478,6 +478,5 @@ public class MainGroup extends Fragment {
         }
     }*/
 }
-
 
 

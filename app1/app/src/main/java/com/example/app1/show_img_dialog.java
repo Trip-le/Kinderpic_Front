@@ -63,12 +63,12 @@ public class show_img_dialog extends Dialog {
         recyclerView.setLayoutManager(GridLayoutManager);
 
         ok.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            mainActivity.startActivityForResult(intent, 101);
-            //this.dialogClickListener.onPositiveClick();
-            //dismiss();
+            //Intent intent = new Intent();
+            //intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+            //intent.setAction(Intent.ACTION_GET_CONTENT);
+            //mainActivity.startActivityForResult(intent, 101);
+            this.dialogClickListener.onPositiveClick();
+            dismiss();
         });
         no.setOnClickListener(v -> {
             this.dialogClickListener.onNegativeClick();
