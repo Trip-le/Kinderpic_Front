@@ -63,10 +63,6 @@ public class show_img_dialog extends Dialog {
         recyclerView.setLayoutManager(GridLayoutManager);
 
         ok.setOnClickListener(v -> {
-            //Intent intent = new Intent();
-            //intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-            //intent.setAction(Intent.ACTION_GET_CONTENT);
-            //mainActivity.startActivityForResult(intent, 101);
             this.dialogClickListener.onPositiveClick();
             dismiss();
         });
@@ -88,24 +84,7 @@ public class show_img_dialog extends Dialog {
         }
     }
 
-    public void checkSelfPermission() {
-        String temp = "";
-        //파일 읽기 권한 확인
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            temp += Manifest.permission.READ_EXTERNAL_STORAGE + " ";
-        }
 
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            temp += Manifest.permission.WRITE_EXTERNAL_STORAGE + " ";
-        }
-
-        if (TextUtils.isEmpty(temp) == false) { // 권한 요청
-            ActivityCompat.requestPermissions(mainActivity, temp.trim().split(" "), 1);
-        } else { // 모두 허용 상태
-            Toast.makeText(context, "권한을 모두 허용", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 101 && resultCode == RESULT_OK) {

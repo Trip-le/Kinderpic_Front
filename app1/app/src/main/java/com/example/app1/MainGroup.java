@@ -1,16 +1,19 @@
 package com.example.app1;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +28,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,7 +73,7 @@ import static com.example.app1.show_img_adapter.suc;
 public class MainGroup extends Fragment {
     private Retrofit retrofit;
     private RetrofitInterface retrofitInterface;
-    private String BASE_URL = "http://192.168.35.105:3000";
+    private String BASE_URL = "http://192.168.219.106:3000";
     private GridLayoutManager GridLayoutManager;
     private GroupAdapter Gadapter;
     private FirebaseVisionFaceDetectorOptions highAccuracyOpts;
@@ -157,6 +162,9 @@ public class MainGroup extends Fragment {
             public void onClick(View view) {
                 Toast myToast = Toast.makeText(getActivity().getApplicationContext(),"업로드", Toast.LENGTH_SHORT);
                 myToast.show();
+                //권한설정
+                checkSelfPermission();
+
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 intent.setType("image/*");
@@ -461,6 +469,24 @@ public class MainGroup extends Fragment {
             show_img_dialog.setCanceledOnTouchOutside(false);//다이얼로그 외부 터치시 꺼짐
             show_img_dialog.setCancelable(true);//뒤로가기 버튼으로 취소
             show_img_dialog.show();
+        }
+    }
+
+    public void checkSelfPermission() {
+        String temp = "";
+        //파일 읽기 권한 확인
+        if (ContextCompat.checkSelfPermission(getView().getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            temp += Manifest.permission.READ_EXTERNAL_STORAGE + " ";
+        }
+
+        if (ContextCompat.checkSelfPermission(getView().getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            temp += Manifest.permission.WRITE_EXTERNAL_STORAGE + " ";
+        }
+
+        if (TextUtils.isEmpty(temp) == false) { // 권한 요청
+            ActivityCompat.requestPermissions((MainActivity) getActivity(), temp.trim().split(" "), 1);
+        } else { // 모두 허용 상태
+            Toast.makeText(getActivity().getApplicationContext(), "권한을 모두 허용", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -118,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                     intent_email = result.getEmail();
                     intent_password = result.getPassword();
 
-                   String[] notsplitname = result.getName().split("_");
-                   intent_name = notsplitname[0];
+                    String[] notsplitname = result.getName().split("_");
+                    intent_name = notsplitname[0];
 
                     builder1.setTitle(intent_name);
                     builder1.setMessage(intent_email);
