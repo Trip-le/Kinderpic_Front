@@ -423,7 +423,7 @@ public class MainGroup extends Fragment {
                         // Uri 타입의 파일경로를 가지는 RequestBody 객체 생성
                         RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), String.valueOf(uriList2.get(i)));
                         // 사진 파일 이름
-                        String fileName = p_name + "_" + p_email + i + ".jpg";
+                        String fileName = GName + "_" + p_name + "_" + p_email + i + ".jpg";
                         // RequestBody로 Multipart.Part 객체 생성
 
                         MultipartBody.Part filePart = MultipartBody.Part.createFormData("photo", fileName, fileBody);
